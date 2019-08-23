@@ -2068,7 +2068,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #496754;
+  background: #8e7edd;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3237,7 +3237,7 @@ img:hover {
   }
 }
 body {
-  background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566575901508&di=da6ef3a60d5b631040017f4860700348&imgtype=0&src=http%3A%2F%2Fdik.img.kttpdq.com%2Fpic%2F44%2F30645%2F7329b9f1c907d261.jpg");
+  background: url("/images/backbai.jpg");
   background-attachment: fixed;
   background-position: 50% 50%;
 }
