@@ -2068,7 +2068,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #afc8f2;
+  background: #26dfff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3243,7 +3243,7 @@ body {
 }
 .main-inner {
   background: #fff;
-  opacity: 0.5;
+  opacity: 0.95;
 }
 .post {
   margin-top: 60px;
