@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://codesong.work/"/>
-  <updated>2019-08-23T08:45:20.210Z</updated>
+  <updated>2020-03-26T14:35:11.082Z</updated>
   <id>https://codesong.work/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>个人博客部署免费的https安全证书</title>
+    <link href="https://codesong.work/posts/ce68fd7a.html"/>
+    <id>https://codesong.work/posts/ce68fd7a.html</id>
+    <published>2020-03-26T12:59:04.000Z</published>
+    <updated>2020-03-26T14:35:11.082Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="个人博客怎么部署免费的https安全证书？"><a href="#个人博客怎么部署免费的https安全证书？" class="headerlink" title="个人博客怎么部署免费的https安全证书？"></a>个人博客怎么部署免费的https安全证书？</h1><p>&emsp;&emsp;首先需要去阿里云申请一个免费的安全证书 <a href="https://www.aliyun.com/product/cas?source=5176.11533457&amp;userCode=l1qstn8f&amp;type=copy" target="_blank" rel="noopener">我是一个超链接</a></p><p>选择免费的证书：<img src="https://s1.ax1x.com/2020/03/26/G9PJte.png" alt="https1"></p><p>免费购买后，在证书控制台申请证书：<img src="https://s1.ax1x.com/2020/03/26/G9Fms1.png" alt="https2"><br>后面接着提交信息，验证，几分钟就会成功了不再阐述 </p><h1 id="将证书部署到服务器上"><a href="#将证书部署到服务器上" class="headerlink" title="将证书部署到服务器上"></a>将证书部署到服务器上</h1><p><strong>服务器系统：Ubuntu</strong></p><p><strong>Web服务器：Apache2</strong></p><h2 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h2><ul><li>从SSL证书控制台下载相应版本的证书</li><li>服务器已安装Open SLL（反正我的是默认有了的）</li></ul><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="在Apache2目录下创建个目录并且将证书文件复制进去"><a href="#在Apache2目录下创建个目录并且将证书文件复制进去" class="headerlink" title="在Apache2目录下创建个目录并且将证书文件复制进去"></a>在Apache2目录下创建个目录并且将证书文件复制进去</h3><pre><code>mkdir /ect/apache2/sslcp *public.crt /etc/apache2/sslcp *Name.key /etc/apache2/ssl</code></pre><h3 id="启用SSL模块"><a href="#启用SSL模块" class="headerlink" title="启用SSL模块"></a>启用SSL模块</h3><pre><code>sudo a2enmod ssl</code></pre><h3 id="修改SSL配置文件default-ssl-conf"><a href="#修改SSL配置文件default-ssl-conf" class="headerlink" title="修改SSL配置文件default-ssl.conf"></a>修改SSL配置文件default-ssl.conf</h3><pre><code>vi /etc/apache2/sites-available/default-ssl.conf</code></pre><h4 id="参数修改如下："><a href="#参数修改如下：" class="headerlink" title="参数修改如下："></a><strong>参数修改如下：</strong></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">IfModules</span> <span class="attr">mod_ssl.c</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">VirtualHost</span> *<span class="attr">:443</span>&gt;</span>  </span><br><span class="line">ServerName   #修改为证书绑定的域名www.YourDomainName.com。</span><br><span class="line">SSLCertificateFile /etc/apache2/ssl/www.YourDomainName_public.crt   #将/etc/apache2/ssl/www.YourDomainName.com_public.crt替换为证书文件路径+证书文件名。</span><br><span class="line">SSLCertificateKeyFile /etc/ssl/apache2/www.YourDomainName.com.key   #将/etc/apache2/ssl/www.YourDomainName.com.key替换为证书密钥文件路径+证书密钥文件名。</span><br><span class="line">SSLCertificateChainFile /etc/apache2/ssl/www.YourDomainName.com_chain.crt  #将/etc/apache2/ssl/www.YourDomainName.com_chain.crt替换为证书链文件路径+证书链文件名。</span><br></pre></td></tr></table></figure><ul><li>sites-available：该目录存放的是可用的虚拟主机；</li><li>sites-enabled：该目录存放的是已经启用的虚拟主机。    </li></ul><h3 id="将default-ssl-conf映射至-etc-apache2-sites-enabled文件夹中建立软链接、实现二者之间的自动关联"><a href="#将default-ssl-conf映射至-etc-apache2-sites-enabled文件夹中建立软链接、实现二者之间的自动关联" class="headerlink" title="将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联"></a>将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联</h3><pre><code>sudo ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/001-ssl.conf</code></pre><h3 id="重新加载Apache2配置文件"><a href="#重新加载Apache2配置文件" class="headerlink" title="重新加载Apache2配置文件"></a>重新加载Apache2配置文件</h3><pre><code>sudo /etc/init.d/apache2 force-reload</code></pre><h3 id="重新启动Apache2"><a href="#重新启动Apache2" class="headerlink" title="重新启动Apache2"></a>重新启动Apache2</h3><pre><code>sudo /etc/init.d/apache2 restart或者 sudo apache2ctl restart</code></pre><p>&emsp;&emsp;<strong>服务器安装https安全证书完成！</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;个人博客怎么部署免费的https安全证书？&quot;&gt;&lt;a href=&quot;#个人博客怎么部署免费的https安全证书？&quot; class=&quot;headerlink&quot; title=&quot;个人博客怎么部署免费的https安全证书？&quot;&gt;&lt;/a&gt;个人博客怎么部署免费的https安全证书？&lt;/
+      
+    
+    </summary>
+    
+      <category term="博客" scheme="https://codesong.work/categories/%E5%8D%9A%E5%AE%A2/"/>
+    
+    
+      <category term="https" scheme="https://codesong.work/tags/https/"/>
+    
+      <category term="安全证书" scheme="https://codesong.work/tags/%E5%AE%89%E5%85%A8%E8%AF%81%E4%B9%A6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>简述Java中内存的划分(学习笔记)</title>
     <link href="https://codesong.work/posts/d9fe9f0c.html"/>
     <id>https://codesong.work/posts/d9fe9f0c.html</id>
     <published>2019-08-23T06:41:39.000Z</published>
-    <updated>2019-08-23T08:45:20.210Z</updated>
+    <updated>2020-03-26T14:33:48.857Z</updated>
     
     <content type="html"><![CDATA[<hr><blockquote><p><strong>任何计算机程序，如果想要运行，都需要开辟一块内存空间。</strong></p></blockquote><hr><p>&emsp;&emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。</p><h1 id="虚拟机栈（VM-Stack）"><a href="#虚拟机栈（VM-Stack）" class="headerlink" title="虚拟机栈（VM Stack）"></a>虚拟机栈（VM Stack）</h1><p>&emsp;&emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈帧来存储局部变量表，栈帧还存有：操作数栈，动态链接，方法出口等信息。</p><h1 id="堆（Heap）"><a href="#堆（Heap）" class="headerlink" title="堆（Heap）"></a>堆（Heap）</h1><p>&emsp;&emsp;堆是Java对象在内存中的存储区域，凡是用new出来的东西都在这里面。Java中的对象和数组都被分配在堆中。</p><p>堆内存里面的数据，都有默认值。规则：</p><table><thead><tr><th style="text-align:center">数据类型</th><th style="text-align:center">默认值</th></tr></thead><tbody><tr><td style="text-align:center">整型</td><td style="text-align:center">0</td></tr><tr><td style="text-align:center">浮点型</td><td style="text-align:center">0.0</td></tr><tr><td style="text-align:center">字符型</td><td style="text-align:center">‘\u0000’</td></tr><tr><td style="text-align:center">布尔型</td><td style="text-align:center">false</td></tr><tr><td style="text-align:center">引用类型</td><td style="text-align:center">null</td></tr></tbody></table><h1 id="方法区-Method-Area"><a href="#方法区-Method-Area" class="headerlink" title="方法区(Method Area)"></a>方法区(Method Area)</h1><p>&emsp;&emsp;它用于存储已被虚拟机加载的类信息，常量，静态变量，方法的信息，即时编译器编译后的代码等数据。</p><blockquote><p><strong>注意：仅仅是包含了类的相关信息</strong></p></blockquote><h1 id="本地方法栈（Native-Method-Stack）"><a href="#本地方法栈（Native-Method-Stack）" class="headerlink" title="本地方法栈（Native Method Stack）"></a>本地方法栈（Native Method Stack）</h1><p>&emsp;&emsp;与虚拟机栈发挥的作用相似，相比于虚拟机栈为Java方法服务，本地方法栈为虚拟机使用的本地方法服务，执行每个本地方法的时候，都会创建一个栈帧用于存储局部变量表，操作数栈，动态链接，方法出口等信息。</p><p>&emsp;&emsp;很多的算法或者一个功能的实现，都被java封装到了本地方法中，程序直接通过调用本地的方法就行了，本地方法栈就是用来存放这种方法的，实现该功能的代码可能是C也可能是C++,反正不一定就是java实现的。</p><h1 id="Program-Count-Register（PC寄存器，程序计数器）"><a href="#Program-Count-Register（PC寄存器，程序计数器）" class="headerlink" title="Program Count Register（PC寄存器，程序计数器）"></a>Program Count Register（PC寄存器，程序计数器）</h1><p>&emsp;&emsp;指示Java虚拟机下一条需要执行的字节码指令。</p><p>&emsp;&emsp;程序计数器是一块较小的内存区域，作用可以看做是当前线程执行的字节码的位置指示器。分支、循环、跳转、异常处理和线程恢复等基础功能都需要依赖这个计算器来完成。</p><hr><p>&emsp;&emsp;以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。</p><hr>]]></content>
     

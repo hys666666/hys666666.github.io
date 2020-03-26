@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[个人博客部署免费的https安全证书]]></title>
+    <url>%2Fposts%2Fce68fd7a.html</url>
+    <content type="text"><![CDATA[个人博客怎么部署免费的https安全证书？&emsp;&emsp;首先需要去阿里云申请一个免费的安全证书 我是一个超链接 选择免费的证书： 免费购买后，在证书控制台申请证书：后面接着提交信息，验证，几分钟就会成功了不再阐述 将证书部署到服务器上服务器系统：Ubuntu Web服务器：Apache2 前提条件 从SSL证书控制台下载相应版本的证书 服务器已安装Open SLL（反正我的是默认有了的） 操作步骤在Apache2目录下创建个目录并且将证书文件复制进去mkdir /ect/apache2/ssl cp *public.crt /etc/apache2/ssl cp *Name.key /etc/apache2/ssl 启用SSL模块sudo a2enmod ssl 修改SSL配置文件default-ssl.confvi /etc/apache2/sites-available/default-ssl.conf 参数修改如下：123456&lt;IfModules mod_ssl.c&gt;&lt;VirtualHost *:443&gt; ServerName #修改为证书绑定的域名www.YourDomainName.com。SSLCertificateFile /etc/apache2/ssl/www.YourDomainName_public.crt #将/etc/apache2/ssl/www.YourDomainName.com_public.crt替换为证书文件路径+证书文件名。SSLCertificateKeyFile /etc/ssl/apache2/www.YourDomainName.com.key #将/etc/apache2/ssl/www.YourDomainName.com.key替换为证书密钥文件路径+证书密钥文件名。SSLCertificateChainFile /etc/apache2/ssl/www.YourDomainName.com_chain.crt #将/etc/apache2/ssl/www.YourDomainName.com_chain.crt替换为证书链文件路径+证书链文件名。 sites-available：该目录存放的是可用的虚拟主机； sites-enabled：该目录存放的是已经启用的虚拟主机。 将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联sudo ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/001-ssl.conf 重新加载Apache2配置文件sudo /etc/init.d/apache2 force-reload 重新启动Apache2sudo /etc/init.d/apache2 restart 或者 sudo apache2ctl restart &emsp;&emsp;服务器安装https安全证书完成！]]></content>
+      <categories>
+        <category>博客</category>
+      </categories>
+      <tags>
+        <tag>https</tag>
+        <tag>安全证书</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[简述Java中内存的划分(学习笔记)]]></title>
     <url>%2Fposts%2Fd9fe9f0c.html</url>
     <content type="text"><![CDATA[任何计算机程序，如果想要运行，都需要开辟一块内存空间。 &emsp;&emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。 虚拟机栈（VM Stack）&emsp;&emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈帧来存储局部变量表，栈帧还存有：操作数栈，动态链接，方法出口等信息。 堆（Heap）&emsp;&emsp;堆是Java对象在内存中的存储区域，凡是用new出来的东西都在这里面。Java中的对象和数组都被分配在堆中。 堆内存里面的数据，都有默认值。规则： 数据类型 默认值 整型 0 浮点型 0.0 字符型 ‘\u0000’ 布尔型 false 引用类型 null 方法区(Method Area)&emsp;&emsp;它用于存储已被虚拟机加载的类信息，常量，静态变量，方法的信息，即时编译器编译后的代码等数据。 注意：仅仅是包含了类的相关信息 本地方法栈（Native Method Stack）&emsp;&emsp;与虚拟机栈发挥的作用相似，相比于虚拟机栈为Java方法服务，本地方法栈为虚拟机使用的本地方法服务，执行每个本地方法的时候，都会创建一个栈帧用于存储局部变量表，操作数栈，动态链接，方法出口等信息。 &emsp;&emsp;很多的算法或者一个功能的实现，都被java封装到了本地方法中，程序直接通过调用本地的方法就行了，本地方法栈就是用来存放这种方法的，实现该功能的代码可能是C也可能是C++,反正不一定就是java实现的。 Program Count Register（PC寄存器，程序计数器）&emsp;&emsp;指示Java虚拟机下一条需要执行的字节码指令。 &emsp;&emsp;程序计数器是一块较小的内存区域，作用可以看做是当前线程执行的字节码的位置指示器。分支、循环、跳转、异常处理和线程恢复等基础功能都需要依赖这个计算器来完成。 &emsp;&emsp;以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。]]></content>
