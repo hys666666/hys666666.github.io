@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://codesong.work/"/>
-  <updated>2020-03-26T14:35:11.082Z</updated>
+  <updated>2020-03-28T06:10:09.504Z</updated>
   <id>https://codesong.work/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://codesong.work/posts/ce68fd7a.html"/>
     <id>https://codesong.work/posts/ce68fd7a.html</id>
     <published>2020-03-26T12:59:04.000Z</published>
-    <updated>2020-03-26T14:35:11.082Z</updated>
+    <updated>2020-03-28T06:10:09.504Z</updated>
     
     <content type="html"><![CDATA[<h1 id="个人博客怎么部署免费的https安全证书？"><a href="#个人博客怎么部署免费的https安全证书？" class="headerlink" title="个人博客怎么部署免费的https安全证书？"></a>个人博客怎么部署免费的https安全证书？</h1><p>&emsp;&emsp;首先需要去阿里云申请一个免费的安全证书 <a href="https://www.aliyun.com/product/cas?source=5176.11533457&amp;userCode=l1qstn8f&amp;type=copy" target="_blank" rel="noopener">我是一个超链接</a></p><p>选择免费的证书：<img src="https://s1.ax1x.com/2020/03/26/G9PJte.png" alt="https1"></p><p>免费购买后，在证书控制台申请证书：<img src="https://s1.ax1x.com/2020/03/26/G9Fms1.png" alt="https2"><br>后面接着提交信息，验证，几分钟就会成功了不再阐述 </p><h1 id="将证书部署到服务器上"><a href="#将证书部署到服务器上" class="headerlink" title="将证书部署到服务器上"></a>将证书部署到服务器上</h1><p><strong>服务器系统：Ubuntu</strong></p><p><strong>Web服务器：Apache2</strong></p><h2 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h2><ul><li>从SSL证书控制台下载相应版本的证书</li><li>服务器已安装Open SLL（反正我的是默认有了的）</li></ul><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="在Apache2目录下创建个目录并且将证书文件复制进去"><a href="#在Apache2目录下创建个目录并且将证书文件复制进去" class="headerlink" title="在Apache2目录下创建个目录并且将证书文件复制进去"></a>在Apache2目录下创建个目录并且将证书文件复制进去</h3><pre><code>mkdir /ect/apache2/sslcp *public.crt /etc/apache2/sslcp *Name.key /etc/apache2/ssl</code></pre><h3 id="启用SSL模块"><a href="#启用SSL模块" class="headerlink" title="启用SSL模块"></a>启用SSL模块</h3><pre><code>sudo a2enmod ssl</code></pre><h3 id="修改SSL配置文件default-ssl-conf"><a href="#修改SSL配置文件default-ssl-conf" class="headerlink" title="修改SSL配置文件default-ssl.conf"></a>修改SSL配置文件default-ssl.conf</h3><pre><code>vi /etc/apache2/sites-available/default-ssl.conf</code></pre><h4 id="参数修改如下："><a href="#参数修改如下：" class="headerlink" title="参数修改如下："></a><strong>参数修改如下：</strong></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">IfModules</span> <span class="attr">mod_ssl.c</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">VirtualHost</span> *<span class="attr">:443</span>&gt;</span>  </span><br><span class="line">ServerName   #修改为证书绑定的域名www.YourDomainName.com。</span><br><span class="line">SSLCertificateFile /etc/apache2/ssl/www.YourDomainName_public.crt   #将/etc/apache2/ssl/www.YourDomainName.com_public.crt替换为证书文件路径+证书文件名。</span><br><span class="line">SSLCertificateKeyFile /etc/ssl/apache2/www.YourDomainName.com.key   #将/etc/apache2/ssl/www.YourDomainName.com.key替换为证书密钥文件路径+证书密钥文件名。</span><br><span class="line">SSLCertificateChainFile /etc/apache2/ssl/www.YourDomainName.com_chain.crt  #将/etc/apache2/ssl/www.YourDomainName.com_chain.crt替换为证书链文件路径+证书链文件名。</span><br></pre></td></tr></table></figure><ul><li>sites-available：该目录存放的是可用的虚拟主机；</li><li>sites-enabled：该目录存放的是已经启用的虚拟主机。    </li></ul><h3 id="将default-ssl-conf映射至-etc-apache2-sites-enabled文件夹中建立软链接、实现二者之间的自动关联"><a href="#将default-ssl-conf映射至-etc-apache2-sites-enabled文件夹中建立软链接、实现二者之间的自动关联" class="headerlink" title="将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联"></a>将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联</h3><pre><code>sudo ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/001-ssl.conf</code></pre><h3 id="重新加载Apache2配置文件"><a href="#重新加载Apache2配置文件" class="headerlink" title="重新加载Apache2配置文件"></a>重新加载Apache2配置文件</h3><pre><code>sudo /etc/init.d/apache2 force-reload</code></pre><h3 id="重新启动Apache2"><a href="#重新启动Apache2" class="headerlink" title="重新启动Apache2"></a>重新启动Apache2</h3><pre><code>sudo /etc/init.d/apache2 restart或者 sudo apache2ctl restart</code></pre><p>&emsp;&emsp;<strong>服务器安装https安全证书完成！</strong></p>]]></content>
     
@@ -36,6 +36,8 @@
     
       <category term="博客" scheme="https://codesong.work/categories/%E5%8D%9A%E5%AE%A2/"/>
     
+    
+      <category term="ssl" scheme="https://codesong.work/tags/ssl/"/>
     
       <category term="https" scheme="https://codesong.work/tags/https/"/>
     
