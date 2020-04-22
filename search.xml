@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[蓝桥2013真题C++B组（三）]]></title>
+    <url>%2Fposts%2Fc73a0382.html</url>
+    <content type="text"><![CDATA[第39级台阶&emsp;&emsp;小明刚刚看完电影《第39级台阶》，离开电影院的时候，他数了数礼堂前的台阶数，恰好是39级! 站在台阶前，他突然又想着一个问题：&emsp;&emsp;如果我每一步只能迈上1个或2个台阶。先迈左脚，然后左右交替，最后一步是迈右脚，也就是说一共要走偶数步。那么，上完39级台阶，有多少种不同的上法呢？ 很明显是类似斐波那契数的东西f(n){return f(n-1)+f(n-2);}，可以用递归来做，模拟迈步子，当把所有台阶都上完时（每一步都可以迈一个台阶或者两个台阶），再判断是否是偶数步数即可，以下为代码部分：12345678910111213141516171819#include &lt;cstdio&gt;/***************************** * My Blog: CodeSong.work * ***************************** */int ans=0;void f(int n,int step)&#123;//n为剩余台阶数，step为已走步数 if(n&lt;0) return ; if(n==0&amp;&amp;step%2==0) ans++; f(n-1,step+1); f(n-2,step+1);&#125;int main()&#123; f(39,0);//初始总共有39级台阶，已走的步数为零 printf("%d\n",ans); return 0;&#125;]]></content>
+      <categories>
+        <category>蓝桥杯真题</category>
+      </categories>
+      <tags>
+        <tag>蓝桥杯</tag>
+        <tag>算法</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[蓝桥2013真题C++B组（二）]]></title>
+    <url>%2Fposts%2F8a24a0d0.html</url>
+    <content type="text"><![CDATA[马虎的算式小明是个急性子，上小学的时候经常把老师写在黑板上的题目抄错了。有一次，老师出的题目是：36 x 495 = ?他却给抄成了：396 x 45 = ?但结果却很戏剧性，他的答案竟然是对的！！因为 36 * 495 = 396 * 45 = 17820类似这样的巧合情况可能还有很多，比如：27 * 594 = 297 * 5假设 a b c d e 代表1~9不同的5个数字（注意是各不相同的数字，且不含0）能满足形如： ab * cde = adb * ce 这样的算式一共有多少种呢？请你利用计算机的优势寻找所有的可能，并回答不同算式的种类数。满足乘法交换律的算式计为不同的种类，所以答案肯定是个偶数。答案直接通过浏览器提交。注意：只提交一个表示最终统计种类数的数字，不要提交解答过程或其它多余的内容。能满足形如：ab * cde = adb * ce这样的算式一共有多少种？ 既然左右替换算是一种，直接枚举出所有数的组合，然后判断计算结果是否相等即可，非常简单，以下为代码部分： 1234567891011121314151617181920212223242526272829303132333435363738#include &lt;cstdio&gt;/***************************** * My Blog: CodeSong.work * ***************************** */int main()&#123; int ans = 0;//记录答案 for(int a=1;a&lt;10;++a)&#123; for (int b = 1; b &lt; 10; b++) &#123; if(b==a) continue; for (int c = 1; c &lt; 10; c++) &#123; if(c==a||c==b) continue; for (int d = 1; d &lt; 10; d++) &#123; if(d==a||d==b||d==c) continue; for (int e = 1; e &lt; 10; e++) &#123; if(e==a||e==b||e==c||e==d) continue; //ab * cde = adb * ce int t1 = (a*10 + b)*(c*100+d*10+e); int t2 = (a*100+d*10+b)*(c*10+e); if(t1==t2) ans++; &#125; &#125; &#125; &#125; &#125; printf("%d\n",ans); return 0;&#125;]]></content>
+      <categories>
+        <category>蓝桥杯真题</category>
+      </categories>
+      <tags>
+        <tag>蓝桥杯</tag>
+        <tag>算法</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[蓝桥2013真题C++B组（一）]]></title>
+    <url>%2Fposts%2Fba324c08.html</url>
+    <content type="text"><![CDATA[高斯日记&emsp;&emsp;大数学家高斯有个好习惯：无论如何都要记日记。他的日记有个与众不同的地方，他从不注明年月日，而是用一个整数代替，比如：4210。后来人们知道，那个整数就是日期，它表示那一天是高斯出生后的第几天。&emsp;&emsp;这或许也是个好习惯，它时时刻刻提醒着主人：日子又过去一天，还有多少时光可以用于浪费呢？&emsp;&emsp;高斯出生于：1777年4月30日。在高斯发现的一个重要定理的日记上标注着：5343，因此可算出那天是：1791年12月15日。&emsp;&emsp;高斯获得博士学位的那天日记上标着：8113。请你算出高斯获得博士学位的年月日。提交答案的格式是: yyyy-mm-dd, 例如: 1980-03-21 这道题非常简单，由于只提交一个日期，那直接利用程序从出生那天开始跑一遍要求的次数就能够得到答案了。有两点：一、需要检查高斯出生的当天算不算是一天，可以拿题目中的例子来测试你的算法（这一步必须检查不然错了冤死了）二、由于日期有一些规定，所以需要特别处理：闰年，平年，大月，小月，月末，年末； 关于闰年，定制闰年规则不是随意设置的。 首先我们要知道，年的概念，是地球围绕太阳一周的时间（所谓公转周期）称为一年，这个周期是相当稳定的，很长时间也不会变动1秒，但是很遗憾zhidao的是这个周期并不能被一天的时间整除，真正的一年其实是365.2423天（目前）。 所以，如果每年定义为365天的话，1年就会多出0.2423天，4年就会多出0.9692天，非常接近1天，这样闰年就出现了，也就是每4年要有1年设置为366天，来抵消这多出的1天。规则为：(1)如果年份能被4整除，则该年计为闰年 可是，假如不做调整的话，当400年的时候，累计才多出96.92天，闰年的设置却多出来100天，所权以要在400年内，再撤销3个闰年。怎么撤销呢？就有了下面这个规则：(2)如果年份能被100整除，则不计为闰年 问题又来了，400年里有4个，又少了一个，所以再加一个规则就是：(3)如果年份能被400整除，则计为闰年 这样每400年里设置了97个闰年，误差被调整到400年仅有0.08天，而设置规则也并不是很麻烦，所以一直沿用了下来。* 特别注意本题难点仅在逻辑判断,以下为代码部分：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354#include &lt;cstdio&gt;/***************************** * My Blog: CodeSong.work * ***************************** */bool isLeapYear(int n)&#123; //返回是否是闰年的判断 return ((n % 4 == 0 &amp;&amp; n % 100 != 0) || n % 400 == 0);&#125;int main()&#123; int year = 1777;//年 int month = 4;//月 int day = 30;//日 int dSum = 8113;//天数 //月份的逻辑判断为容易出错的地方,还有日期的改变 while (--dSum) &#123;//先判断是否为月底 if (month == 12 &amp;&amp; day == 31) &#123; //判断是否是一年中最后的一天，year加1，month和day重置为1 year += 1; month = 1; day = 1; continue; &#125; if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10) &amp;&amp; day == 31) &#123; //判断是否是大月中的最后一天 month += 1; day = 1; continue; &#125; if ((month == 4 || month == 6 || month == 9 || month == 11) &amp;&amp; day == 30) &#123; //判断是否是小月中的最后一天 month += 1; day = 1; continue; &#125; if (month == 2 &amp;&amp; isLeapYear(year) &amp;&amp; day == 29) &#123; //单独处理闰年的月底 month += 1; day = 1; continue; &#125; if (month == 2 &amp;&amp; !isLeapYear(year) &amp;&amp; day==28) &#123; //单独处理平年的月底 month += 1; day = 1; continue; &#125; day++;//非月底则day直接增加一 &#125; printf("%d-%d-%d\n", year, month, day); return 0;&#125;]]></content>
+      <categories>
+        <category>蓝桥杯真题</category>
+      </categories>
+      <tags>
+        <tag>蓝桥杯</tag>
+        <tag>算法</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[个人博客部署免费的https安全证书]]></title>
     <url>%2Fposts%2Fce68fd7a.html</url>
     <content type="text"><![CDATA[个人博客怎么部署免费的https安全证书？&emsp;&emsp;首先需要去阿里云申请一个免费的安全证书 我是一个超链接 选择免费的证书： 免费购买后，在证书控制台申请证书：后面接着提交信息，验证，几分钟就会成功了不再阐述 将证书部署到服务器上服务器系统：Ubuntu Web服务器：Apache2 前提条件 从SSL证书控制台下载相应版本的证书 服务器已安装Open SLL（反正我的是默认有了的） 操作步骤在Apache2目录下创建个目录并且将证书文件复制进去mkdir /ect/apache2/ssl cp *public.crt /etc/apache2/ssl cp *Name.key /etc/apache2/ssl 启用SSL模块sudo a2enmod ssl 修改SSL配置文件default-ssl.confvi /etc/apache2/sites-available/default-ssl.conf 参数修改如下：123456&lt;IfModules mod_ssl.c&gt;&lt;VirtualHost *:443&gt; ServerName #修改为证书绑定的域名www.YourDomainName.com。SSLCertificateFile /etc/apache2/ssl/www.YourDomainName_public.crt #将/etc/apache2/ssl/www.YourDomainName.com_public.crt替换为证书文件路径+证书文件名。SSLCertificateKeyFile /etc/ssl/apache2/www.YourDomainName.com.key #将/etc/apache2/ssl/www.YourDomainName.com.key替换为证书密钥文件路径+证书密钥文件名。SSLCertificateChainFile /etc/apache2/ssl/www.YourDomainName.com_chain.crt #将/etc/apache2/ssl/www.YourDomainName.com_chain.crt替换为证书链文件路径+证书链文件名。 sites-available：该目录存放的是可用的虚拟主机； sites-enabled：该目录存放的是已经启用的虚拟主机。 将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联sudo ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/001-ssl.conf 重新加载Apache2配置文件sudo /etc/init.d/apache2 force-reload 重新启动Apache2sudo /etc/init.d/apache2 restart 或者 sudo apache2ctl restart &emsp;&emsp;服务器安装https安全证书完成！]]></content>
@@ -14,16 +53,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[简述Java中内存的划分(学习笔记)]]></title>
-    <url>%2Fposts%2Fd9fe9f0c.html</url>
-    <content type="text"><![CDATA[任何计算机程序，如果想要运行，都需要开辟一块内存空间。 &emsp;&emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。 虚拟机栈（VM Stack）&emsp;&emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈帧来存储局部变量表，栈帧还存有：操作数栈，动态链接，方法出口等信息。 堆（Heap）&emsp;&emsp;堆是Java对象在内存中的存储区域，凡是用new出来的东西都在这里面。Java中的对象和数组都被分配在堆中。 堆内存里面的数据，都有默认值。规则： 数据类型 默认值 整型 0 浮点型 0.0 字符型 ‘\u0000’ 布尔型 false 引用类型 null 方法区(Method Area)&emsp;&emsp;它用于存储已被虚拟机加载的类信息，常量，静态变量，方法的信息，即时编译器编译后的代码等数据。 注意：仅仅是包含了类的相关信息 本地方法栈（Native Method Stack）&emsp;&emsp;与虚拟机栈发挥的作用相似，相比于虚拟机栈为Java方法服务，本地方法栈为虚拟机使用的本地方法服务，执行每个本地方法的时候，都会创建一个栈帧用于存储局部变量表，操作数栈，动态链接，方法出口等信息。 &emsp;&emsp;很多的算法或者一个功能的实现，都被java封装到了本地方法中，程序直接通过调用本地的方法就行了，本地方法栈就是用来存放这种方法的，实现该功能的代码可能是C也可能是C++,反正不一定就是java实现的。 Program Count Register（PC寄存器，程序计数器）&emsp;&emsp;指示Java虚拟机下一条需要执行的字节码指令。 &emsp;&emsp;程序计数器是一块较小的内存区域，作用可以看做是当前线程执行的字节码的位置指示器。分支、循环、跳转、异常处理和线程恢复等基础功能都需要依赖这个计算器来完成。 &emsp;&emsp;以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>学习笔记</tag>
-        <tag>Java内存</tag>
-      </tags>
+    <title><![CDATA[Java中内存的划分-学习笔记]]></title>
+    <url>%2Fposts%2F3a8013f5.html</url>
+    <content type="text"><![CDATA[任何计算机程序，如果想要运行，都需要开辟一块内存空间。 &emsp;&emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。 虚拟机栈（VM Stack）&emsp;&emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈帧来存储局部变量表，栈帧还存有：操作数栈，动态链接，方法出口等信息。 堆（Heap）&emsp;&emsp;堆是Java对象在内存中的存储区域，凡是用new出来的东西都在这里面。Java中的对象和数组都被分配在堆中。 堆内存里面的数据，都有默认值。规则： 数据类型 默认值 整型 0 浮点型 0.0 字符型 ‘\u0000’ 布尔型 false 引用类型 null 方法区(Method Area) 它用于存储已被虚拟机加载的类信息，常量，静态变量，方法的信息，即时编译器编译后的代码等数据。 注意：仅仅是包含了类的相关信息 本地方法栈（Native Method Stack） 与虚拟机栈发挥的作用相似，相比于虚拟机栈为Java方法服务，本地方法栈为虚拟机使用的本地方法服务，执行每个本地方法的时候，都会创建一个栈帧用于存储局部变量表，操作数栈，动态链接，方法出口等信息。 很多的算法或者一个功能的实现，都被java封装到了本地方法中，程序直接通过调用本地的方法就行了，本地方法栈就是用来存放这种方法的，实现该功能的代码可能是C也可能是C++,反正不一定就是java实现的。 Program Count Register（PC寄存器，程序计数器） 指示Java虚拟机下一条需要执行的字节码指令。 程序计数器是一块较小的内存区域，作用可以看做是当前线程执行的字节码的位置指示器。分支、循环、跳转、异常处理和线程恢复等基础功能都需要依赖这个计算器来完成。 以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。]]></content>
   </entry>
   <entry>
     <title><![CDATA[C#复习知识点提炼]]></title>

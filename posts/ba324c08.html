@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="学习笔记,Java内存,">
+  <meta name="keywords" content="蓝桥杯,算法,C/C++,">
 
 
 
@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="任何计算机程序，如果想要运行，都需要开辟一块内存空间。   &amp;emsp;&amp;emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。 虚拟机栈（VM Stack）&amp;emsp;&amp;emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈">
-<meta name="keywords" content="学习笔记,Java内存">
+<meta name="description" content="高斯日记&amp;emsp;&amp;emsp;大数学家高斯有个好习惯：无论如何都要记日记。他的日记有个与众不同的地方，他从不注明年月日，而是用一个整数代替，比如：4210。后来人们知道，那个整数就是日期，它表示那一天是高斯出生后的第几天。&amp;emsp;&amp;emsp;这或许也是个好习惯，它时时刻刻提醒着主人：日子又过去一天，还有多少时光可以用于浪费呢？&amp;emsp;&amp;emsp;高斯出生于：1777年4月30日。在高斯发">
+<meta name="keywords" content="蓝桥杯,算法,C&#x2F;C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简述Java中内存的划分(学习笔记)">
-<meta property="og:url" content="https://codesong.work/posts/d9fe9f0c.html">
+<meta property="og:title" content="蓝桥2013真题C++B组（一）">
+<meta property="og:url" content="https://codesong.work/posts/ba324c08.html">
 <meta property="og:site_name" content="CodeSong By Blog">
-<meta property="og:description" content="任何计算机程序，如果想要运行，都需要开辟一块内存空间。   &amp;emsp;&amp;emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。 虚拟机栈（VM Stack）&amp;emsp;&amp;emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈">
+<meta property="og:description" content="高斯日记&amp;emsp;&amp;emsp;大数学家高斯有个好习惯：无论如何都要记日记。他的日记有个与众不同的地方，他从不注明年月日，而是用一个整数代替，比如：4210。后来人们知道，那个整数就是日期，它表示那一天是高斯出生后的第几天。&amp;emsp;&amp;emsp;这或许也是个好习惯，它时时刻刻提醒着主人：日子又过去一天，还有多少时光可以用于浪费呢？&amp;emsp;&amp;emsp;高斯出生于：1777年4月30日。在高斯发">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-26T14:33:48.857Z">
+<meta property="og:updated_time" content="2020-04-22T10:39:53.048Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简述Java中内存的划分(学习笔记)">
-<meta name="twitter:description" content="任何计算机程序，如果想要运行，都需要开辟一块内存空间。   &amp;emsp;&amp;emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。 虚拟机栈（VM Stack）&amp;emsp;&amp;emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈">
+<meta name="twitter:title" content="蓝桥2013真题C++B组（一）">
+<meta name="twitter:description" content="高斯日记&amp;emsp;&amp;emsp;大数学家高斯有个好习惯：无论如何都要记日记。他的日记有个与众不同的地方，他从不注明年月日，而是用一个整数代替，比如：4210。后来人们知道，那个整数就是日期，它表示那一天是高斯出生后的第几天。&amp;emsp;&amp;emsp;这或许也是个好习惯，它时时刻刻提醒着主人：日子又过去一天，还有多少时光可以用于浪费呢？&amp;emsp;&amp;emsp;高斯出生于：1777年4月30日。在高斯发">
 
 
 
@@ -127,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://codesong.work/posts/d9fe9f0c.html">
+  <link rel="canonical" href="https://codesong.work/posts/ba324c08.html">
 
 
 
 
 
-  <title>简述Java中内存的划分(学习笔记) | CodeSong By Blog</title>
+  <title>蓝桥2013真题C++B组（一） | CodeSong By Blog</title>
   
 
 
@@ -312,7 +312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codesong.work/posts/d9fe9f0c.html">
+    <link itemprop="mainEntityOfPage" href="https://codesong.work/posts/ba324c08.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CodeSong">
@@ -329,7 +329,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">简述Java中内存的划分(学习笔记)</h1>
+          <h1 class="post-title" itemprop="name headline">蓝桥2013真题C++B组（一）</h1>
         
 
         <div class="post-meta">
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-23T14:41:39+08:00">
-                2019-08-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-22T18:31:26+08:00">
+                2020-04-22
               </time>
             
 
@@ -365,8 +365,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/蓝桥杯真题/" itemprop="url" rel="index">
+                    <span itemprop="name">蓝桥杯真题</span>
                   </a>
                 </span>
 
@@ -383,8 +383,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/d9fe9f0c.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/d9fe9f0c.html" itemprop="commentCount"></span>
+                <a href="/posts/ba324c08.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/ba324c08.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -417,56 +417,18 @@
       
 
       
-        <hr>
+        <h1 id="高斯日记"><a href="#高斯日记" class="headerlink" title="高斯日记"></a>高斯日记</h1><p>&emsp;&emsp;大数学家高斯有个好习惯：无论如何都要记日记。他的日记有个与众不同的地方，他从不注明年月日，而是用一个整数代替，<br>比如：4210。后来人们知道，那个整数就是日期，它表示那一天是高斯出生后的第几天。<br><br>&emsp;&emsp;这或许也是个好习惯，它时时刻刻提醒着主人：日子又过去一天，还有多少时光可以用于浪费呢？<br><br>&emsp;&emsp;高斯出生于：1777年4月30日。在高斯发现的一个重要定理的日记上标注着：5343，因此可算出那天是：1791年12月15日。<br><br>&emsp;&emsp;高斯获得博士学位的那天日记上标着：8113。请你算出高斯获得博士学位的年月日。<br><br>提交答案的格式是: <strong>yyyy-mm-dd</strong>, 例如: 1980-03-21</p>
+<hr>
+<p>这道题非常简单，由于只提交一个日期，那直接利用程序从出生那天开始跑一遍要求的次数就能够得到答案了。有两点：<br><br><strong>一、需要检查高斯出生的当天算不算是一天，可以拿题目中的例子来测试你的算法（这一步必须检查不然错了冤死了）</strong><br><br><strong>二、由于日期有一些规定，所以需要特别处理：闰年，平年，大月，小月，月末，年末；</strong><br></p>
 <blockquote>
-<p><strong>任何计算机程序，如果想要运行，都需要开辟一块内存空间。</strong></p>
+<p><em>关于闰年，定制闰年规则不是随意设置的。<br>
+</em>首先我们要知道，年的概念，是地球围绕太阳一周的时间（所谓公转周期）称为一年，这个周期是相当稳定的，很长时间也不会变动1秒，但是很遗憾zhidao的是这个周期并不能被一天的时间整除，真正的一年其实是365.2423天（目前）。<em><br>
+</em>所以，如果每年定义为365天的话，1年就会多出0.2423天，4年就会多出0.9692天，非常接近1天，这样闰年就出现了，也就是每4年要有1年设置为366天，来抵消这多出的1天。规则为：<em><br><br>(1)<strong>如果年份能被4整除，则该年计为闰年</strong><br>
+</em>可是，假如不做调整的话，当400年的时候，累计才多出96.92天，闰年的设置却多出来100天，所权以要在400年内，再撤销3个闰年。怎么撤销呢？就有了下面这个规则：<em><br>(2)<strong>如果年份能被100整除，则不计为闰年</strong><br>
+</em>问题又来了，400年里有4个，又少了一个，所以再加一个规则就是：<em><br><br>(3)<strong>如果年份能被400整除，则计为闰年</strong><br>
+</em>这样每400年里设置了97个闰年，误差被调整到400年仅有0.08天，而设置规则也并不是很麻烦，所以一直沿用了下来。*</p>
 </blockquote>
-<hr>
-<p>&emsp;&emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。</p>
-<h1 id="虚拟机栈（VM-Stack）"><a href="#虚拟机栈（VM-Stack）" class="headerlink" title="虚拟机栈（VM Stack）"></a>虚拟机栈（VM Stack）</h1><p>&emsp;&emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈帧来存储局部变量表，栈帧还存有：操作数栈，动态链接，方法出口等信息。</p>
-<h1 id="堆（Heap）"><a href="#堆（Heap）" class="headerlink" title="堆（Heap）"></a>堆（Heap）</h1><p>&emsp;&emsp;堆是Java对象在内存中的存储区域，凡是用new出来的东西都在这里面。Java中的对象和数组都被分配在堆中。</p>
-<p>堆内存里面的数据，都有默认值。规则：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">数据类型</th>
-<th style="text-align:center">默认值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">整型</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">浮点型</td>
-<td style="text-align:center">0.0</td>
-</tr>
-<tr>
-<td style="text-align:center">字符型</td>
-<td style="text-align:center">‘\u0000’</td>
-</tr>
-<tr>
-<td style="text-align:center">布尔型</td>
-<td style="text-align:center">false</td>
-</tr>
-<tr>
-<td style="text-align:center">引用类型</td>
-<td style="text-align:center">null</td>
-</tr>
-</tbody>
-</table>
-<h1 id="方法区-Method-Area"><a href="#方法区-Method-Area" class="headerlink" title="方法区(Method Area)"></a>方法区(Method Area)</h1><p>&emsp;&emsp;它用于存储已被虚拟机加载的类信息，常量，静态变量，方法的信息，即时编译器编译后的代码等数据。</p>
-<blockquote>
-<p><strong>注意：仅仅是包含了类的相关信息</strong></p>
-</blockquote>
-<h1 id="本地方法栈（Native-Method-Stack）"><a href="#本地方法栈（Native-Method-Stack）" class="headerlink" title="本地方法栈（Native Method Stack）"></a>本地方法栈（Native Method Stack）</h1><p>&emsp;&emsp;与虚拟机栈发挥的作用相似，相比于虚拟机栈为Java方法服务，本地方法栈为虚拟机使用的本地方法服务，执行每个本地方法的时候，都会创建一个栈帧用于存储局部变量表，操作数栈，动态链接，方法出口等信息。</p>
-<p>&emsp;&emsp;很多的算法或者一个功能的实现，都被java封装到了本地方法中，程序直接通过调用本地的方法就行了，本地方法栈就是用来存放这种方法的，实现该功能的代码可能是C也可能是C++,反正不一定就是java实现的。</p>
-<h1 id="Program-Count-Register（PC寄存器，程序计数器）"><a href="#Program-Count-Register（PC寄存器，程序计数器）" class="headerlink" title="Program Count Register（PC寄存器，程序计数器）"></a>Program Count Register（PC寄存器，程序计数器）</h1><p>&emsp;&emsp;指示Java虚拟机下一条需要执行的字节码指令。</p>
-<p>&emsp;&emsp;程序计数器是一块较小的内存区域，作用可以看做是当前线程执行的字节码的位置指示器。分支、循环、跳转、异常处理和线程恢复等基础功能都需要依赖这个计算器来完成。</p>
-<hr>
-<p>&emsp;&emsp;以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。</p>
-<hr>
+<p>特别注意本题难点仅在逻辑判断,以下为代码部分：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="comment">/*****************************</span></span><br><span class="line"><span class="comment"> * My Blog: CodeSong.work    *</span></span><br><span class="line"><span class="comment"> *****************************</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isLeapYear</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="comment">//返回是否是闰年的判断</span></span><br><span class="line">    <span class="keyword">return</span> ((n % <span class="number">4</span> == <span class="number">0</span> &amp;&amp; n % <span class="number">100</span> != <span class="number">0</span>) || n % <span class="number">400</span> == <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> year = <span class="number">1777</span>;<span class="comment">//年</span></span><br><span class="line">    <span class="keyword">int</span> month = <span class="number">4</span>;<span class="comment">//月</span></span><br><span class="line">    <span class="keyword">int</span> day = <span class="number">30</span>;<span class="comment">//日</span></span><br><span class="line">    <span class="keyword">int</span> dSum = <span class="number">8113</span>;<span class="comment">//天数</span></span><br><span class="line">    <span class="comment">//月份的逻辑判断为容易出错的地方,还有日期的改变</span></span><br><span class="line">    <span class="keyword">while</span> (--dSum)</span><br><span class="line">    &#123;<span class="comment">//先判断是否为月底</span></span><br><span class="line">        <span class="keyword">if</span> (month == <span class="number">12</span> &amp;&amp; day == <span class="number">31</span>)</span><br><span class="line">        &#123; <span class="comment">//判断是否是一年中最后的一天，year加1，month和day重置为1</span></span><br><span class="line">            year += <span class="number">1</span>;</span><br><span class="line">            month = <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((month == <span class="number">1</span> || month == <span class="number">3</span> || month == <span class="number">5</span> || month == <span class="number">7</span> || month == <span class="number">8</span> || month == <span class="number">10</span>) &amp;&amp; day == <span class="number">31</span>)</span><br><span class="line">        &#123; <span class="comment">//判断是否是大月中的最后一天</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((month == <span class="number">4</span> || month == <span class="number">6</span> || month == <span class="number">9</span> || month == <span class="number">11</span>) &amp;&amp; day == <span class="number">30</span>)</span><br><span class="line">        &#123; <span class="comment">//判断是否是小月中的最后一天</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (month == <span class="number">2</span> &amp;&amp; isLeapYear(year) &amp;&amp; day == <span class="number">29</span>)</span><br><span class="line">        &#123; <span class="comment">//单独处理闰年的月底</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (month == <span class="number">2</span> &amp;&amp; !isLeapYear(year) &amp;&amp; day==<span class="number">28</span>)</span><br><span class="line">        &#123; <span class="comment">//单独处理平年的月底</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        day++;<span class="comment">//非月底则day直接增加一</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d-%d-%d\n"</span>, year, month, day);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -516,7 +478,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://codesong.work/posts/d9fe9f0c.html" title="简述Java中内存的划分(学习笔记)">https://codesong.work/posts/d9fe9f0c.html</a>
+    <a href="https://codesong.work/posts/ba324c08.html" title="蓝桥2013真题C++B组（一）">https://codesong.work/posts/ba324c08.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -531,9 +493,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/学习笔记/" rel="tag"><i class="fa fa-tag"></i>学习笔记</a>
+            <a href="/tags/蓝桥杯/" rel="tag"><i class="fa fa-tag"></i>蓝桥杯</a>
           
-            <a href="/tags/Java内存/" rel="tag"><i class="fa fa-tag"></i>Java内存</a>
+            <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i>算法</a>
+          
+            <a href="/tags/C-C/" rel="tag"><i class="fa fa-tag"></i>C/C++</a>
           
         </div>
       
@@ -546,8 +510,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/2b58aa48.html" rel="next" title="C#复习知识点提炼">
-                <i class="fa fa-chevron-left"></i> C#复习知识点提炼
+              <a href="/posts/ce68fd7a.html" rel="next" title="个人博客部署免费的https安全证书">
+                <i class="fa fa-chevron-left"></i> 个人博客部署免费的https安全证书
               </a>
             
           </div>
@@ -556,8 +520,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/ce68fd7a.html" rel="prev" title="个人博客部署免费的https安全证书">
-                个人博客部署免费的https安全证书 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/8a24a0d0.html" rel="prev" title="蓝桥2013真题C++B组（二）">
+                蓝桥2013真题C++B组（二） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -664,7 +628,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -686,7 +650,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -753,7 +717,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟机栈（VM-Stack）"><span class="nav-number">1.</span> <span class="nav-text">虚拟机栈（VM Stack）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#堆（Heap）"><span class="nav-number">2.</span> <span class="nav-text">堆（Heap）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法区-Method-Area"><span class="nav-number">3.</span> <span class="nav-text">方法区(Method Area)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本地方法栈（Native-Method-Stack）"><span class="nav-number">4.</span> <span class="nav-text">本地方法栈（Native Method Stack）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Program-Count-Register（PC寄存器，程序计数器）"><span class="nav-number">5.</span> <span class="nav-text">Program Count Register（PC寄存器，程序计数器）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#高斯日记"><span class="nav-number">1.</span> <span class="nav-text">高斯日记</span></a></li></ol></div>
             
 
           </div>
@@ -775,7 +739,7 @@
     <h3 class="widget-title">这是个奇迹！</h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java内存/">Java内存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/https/">https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssl/">ssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/复习/">复习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全证书/">安全证书</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/">C/C++</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/https/">https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssl/">ssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/复习/">复习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全证书/">安全证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝桥杯/">蓝桥杯</a><span class="tag-list-count">3</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -979,9 +943,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://codesong.work/posts/d9fe9f0c.html';
-          this.page.identifier = 'posts/d9fe9f0c.html';
-          this.page.title = '简述Java中内存的划分(学习笔记)';
+          this.page.url = 'https://codesong.work/posts/ba324c08.html';
+          this.page.identifier = 'posts/ba324c08.html';
+          this.page.title = '蓝桥2013真题C++B组（一）';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://CodeSong.disqus.com/embed.js';
