@@ -137,7 +137,7 @@
     <link href="https://codesong.work/posts/3a8013f5.html"/>
     <id>https://codesong.work/posts/3a8013f5.html</id>
     <published>2019-08-23T10:44:04.000Z</published>
-    <updated>2020-04-22T10:57:09.121Z</updated>
+    <updated>2020-04-22T11:23:50.506Z</updated>
     
     <content type="html"><![CDATA[<hr><blockquote><p>任何计算机程序，如果想要运行，都需要开辟一块内存空间。</p></blockquote><hr><p>&emsp;&emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。</p><h1 id="虚拟机栈（VM-Stack）"><a href="#虚拟机栈（VM-Stack）" class="headerlink" title="虚拟机栈（VM Stack）"></a>虚拟机栈（VM Stack）</h1><p>&emsp;&emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈帧来存储局部变量表，栈帧还存有：操作数栈，动态链接，方法出口等信息。</p><h1 id="堆（Heap）"><a href="#堆（Heap）" class="headerlink" title="堆（Heap）"></a>堆（Heap）</h1><p>&emsp;&emsp;堆是Java对象在内存中的存储区域，凡是用new出来的东西都在这里面。Java中的对象和数组都被分配在堆中。</p><p>堆内存里面的数据，都有默认值。规则：</p><table><thead><tr><th style="text-align:center">数据类型</th><th style="text-align:center">默认值 </th></tr></thead><tbody><tr><td style="text-align:center">整型</td><td style="text-align:center">0 </td></tr><tr><td style="text-align:center">浮点型</td><td style="text-align:center">0.0</td></tr><tr><td style="text-align:center">字符型</td><td style="text-align:center">‘\u0000’</td></tr><tr><td style="text-align:center">布尔型</td><td style="text-align:center">false</td></tr><tr><td style="text-align:center">引用类型</td><td style="text-align:center">null</td></tr></tbody></table><h1 id="方法区-Method-Area"><a href="#方法区-Method-Area" class="headerlink" title="方法区(Method Area)"></a>方法区(Method Area)</h1><p>  它用于存储已被虚拟机加载的类信息，常量，静态变量，方法的信息，即时编译器编译后的代码等数据。</p><p><strong>注意：仅仅是包含了类的相关信息</strong></p><h1 id="本地方法栈（Native-Method-Stack）"><a href="#本地方法栈（Native-Method-Stack）" class="headerlink" title="本地方法栈（Native Method Stack）"></a>本地方法栈（Native Method Stack）</h1><p>  与虚拟机栈发挥的作用相似，相比于虚拟机栈为Java方法服务，本地方法栈为虚拟机使用的本地方法服务，执行每个本地方法的时候，都会创建一个栈帧用于存储局部变量表，操作数栈，动态链接，方法出口等信息。</p><p>  很多的算法或者一个功能的实现，都被java封装到了本地方法中，程序直接通过调用本地的方法就行了，本地方法栈就是用来存放这种方法的，实现该功能的代码可能是C也可能是C++,反正不一定就是java实现的。</p><h1 id="Program-Count-Register（PC寄存器，程序计数器）"><a href="#Program-Count-Register（PC寄存器，程序计数器）" class="headerlink" title="Program Count Register（PC寄存器，程序计数器）"></a>Program Count Register（PC寄存器，程序计数器）</h1><p>  指示Java虚拟机下一条需要执行的字节码指令。</p><p>  程序计数器是一块较小的内存区域，作用可以看做是当前线程执行的字节码的位置指示器。分支、循环、跳转、异常处理和线程恢复等基础功能都需要依赖这个计算器来完成。</p><hr><h2 id="以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。-所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。"><a href="#以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。-所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。" class="headerlink" title="  以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。"></a>  以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。</h2>]]></content>
     
@@ -155,6 +155,10 @@
     
     </summary>
     
+      <category term="学习笔记" scheme="https://codesong.work/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Java" scheme="https://codesong.work/tags/Java/"/>
     
   </entry>
   
