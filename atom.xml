@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://codesong.work/"/>
-  <updated>2020-04-22T11:01:45.000Z</updated>
+  <updated>2020-06-19T09:12:45.727Z</updated>
   <id>https://codesong.work/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MVC模式</title>
+    <link href="https://codesong.work/posts/undefined.html"/>
+    <id>https://codesong.work/posts/undefined.html</id>
+    <published>2020-06-19T09:10:48.000Z</published>
+    <updated>2020-06-19T09:12:45.727Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 --><h1 id="MVC设计模式（设计思想）"><a href="#MVC设计模式（设计思想）" class="headerlink" title="MVC设计模式（设计思想）"></a>MVC设计模式（设计思想）</h1><h2 id="软件开发过程中比较流行的设计思想"><a href="#软件开发过程中比较流行的设计思想" class="headerlink" title="软件开发过程中比较流行的设计思想"></a><em>软件开发过程中比较流行的设计思想</em></h2><p><strong>M</strong>（Model模型）:封装应用程序的数据结构和事物逻辑，为视图服务</p><ul><li>JavaBean  </li><li><ul><li>DAO</li></ul></li></ul><p><strong>V</strong>（View视图）:模型的外在表现，模型状态改变时，有所体现</p><ul><li>JSP</li></ul><p><strong>C</strong>（Controller控制器）:对用户的输入进行响应，将模型和视图联系到一起，负责将数据写到模型中，并调用视图</p><ul><li>Servlet</li></ul><p>&nbsp;&nbsp;将程序分成了不同的三个模块，显示，业务逻辑，过程控制都各自独立，软件可伸缩性和可维护性都有了很大的优势。</p><p><strong>步骤如下：</strong></p><pre><code>1.Servlet（Controller）接收参数，封装到JavaBean（Model）2.调用Javabean（Model）的方法查询数据库，结果暂存在JavaBean（Model）3.Servlet（Controller）跳转到JSP（View），就是JSP（View）使用JavaBean（model），得到结果并且显示</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 --&gt;
+&lt;h1 id=&quot;MVC设计模式（设计思想）&quot;&gt;&lt;a href=&quot;#MVC
+      
+    
+    </summary>
+    
+      <category term="设计模式" scheme="https://codesong.work/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="MVC" scheme="https://codesong.work/tags/MVC/"/>
+    
+      <category term="JavaEE" scheme="https://codesong.work/tags/JavaEE/"/>
+    
+  </entry>
   
   <entry>
     <title>蓝桥2013真题C++B组（三）</title>
