@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://codesong.work/"/>
-  <updated>2020-06-19T09:12:45.727Z</updated>
+  <updated>2020-06-26T12:25:49.094Z</updated>
   <id>https://codesong.work/</id>
   
   <author>
@@ -17,13 +17,221 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>MVC模式</title>
-    <link href="https://codesong.work/posts/undefined.html"/>
-    <id>https://codesong.work/posts/undefined.html</id>
-    <published>2020-06-19T09:10:48.000Z</published>
-    <updated>2020-06-19T09:12:45.727Z</updated>
+    <title>Struts2与Struts1的区别</title>
+    <link href="https://codesong.work/posts/422fe07c.html"/>
+    <id>https://codesong.work/posts/422fe07c.html</id>
+    <published>2020-06-26T12:08:22.000Z</published>
+    <updated>2020-06-26T12:25:49.094Z</updated>
     
-    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 --><h1 id="MVC设计模式（设计思想）"><a href="#MVC设计模式（设计思想）" class="headerlink" title="MVC设计模式（设计思想）"></a>MVC设计模式（设计思想）</h1><h2 id="软件开发过程中比较流行的设计思想"><a href="#软件开发过程中比较流行的设计思想" class="headerlink" title="软件开发过程中比较流行的设计思想"></a><em>软件开发过程中比较流行的设计思想</em></h2><p><strong>M</strong>（Model模型）:封装应用程序的数据结构和事物逻辑，为视图服务</p><ul><li>JavaBean  </li><li><ul><li>DAO</li></ul></li></ul><p><strong>V</strong>（View视图）:模型的外在表现，模型状态改变时，有所体现</p><ul><li>JSP</li></ul><p><strong>C</strong>（Controller控制器）:对用户的输入进行响应，将模型和视图联系到一起，负责将数据写到模型中，并调用视图</p><ul><li>Servlet</li></ul><p>&nbsp;&nbsp;将程序分成了不同的三个模块，显示，业务逻辑，过程控制都各自独立，软件可伸缩性和可维护性都有了很大的优势。</p><p><strong>步骤如下：</strong></p><pre><code>1.Servlet（Controller）接收参数，封装到JavaBean（Model）2.调用Javabean（Model）的方法查询数据库，结果暂存在JavaBean（Model）3.Servlet（Controller）跳转到JSP（View），就是JSP（View）使用JavaBean（model），得到结果并且显示</code></pre>]]></content>
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶--><h1 id="Struts-2框架"><a href="#Struts-2框架" class="headerlink" title="Struts 2框架"></a><strong>Struts 2</strong>框架</h1><p><em>Struts2并没有继承Struts1的特点，反而和WebWork非常类似。因为Struts2是在WebWork的基础上发展出来的，它在各种功能和性能方面都有很好的保证，吸收了Struts1和WebWork的优势，所以它也是一个非常优秀的框架</em></p><h2 id="Struts-2-和Struts-1的不同点："><a href="#Struts-2-和Struts-1的不同点：" class="headerlink" title="Struts 2 和Struts 1的不同点："></a><strong>Struts 2</strong> 和<strong>Struts 1</strong>的不同点：</h2><h3 id="Action类的编写"><a href="#Action类的编写" class="headerlink" title="Action类的编写"></a><strong>Action</strong>类的编写</h3><ul><li><p><strong>Struts 1</strong>中，Action一般继承基类<strong>org.apache.struts.action.Action</strong></p></li><li><p><strong>Struts 2</strong> 中，Action类可以实现一个Action接口，也可以实现其他接口，也可以继承ActionSupport基类，<strong>甚至不用实现任何接口，只编写execute函数即可！</strong></p><h3 id="Action的运行模式"><a href="#Action的运行模式" class="headerlink" title="Action的运行模式"></a><strong>Action</strong>的运行模式</h3></li><li><p><strong>Struts 1</strong> 中，Action是单态的，系统实例化一个对象来处理多个请求，为每个请求分配一个线程，在该线程中运行execute函数。因此在开发中需要特别小心，Action资源必须是线程安全的或同步的。</p></li><li><p><strong>Struts 2</strong>中，Action为每个请求产生一个实例，不会产生线程安全问题，并且系统能及时回收资源垃圾，不会有废弃空间的问题。</p><h3 id="对Wbe容器的依赖"><a href="#对Wbe容器的依赖" class="headerlink" title="对Wbe容器的依赖"></a>对Wbe容器的依赖</h3></li><li>Struts 1 中，Action的execute函数，传入了<strong>Servlet API：HttpServletRequest</strong> 和 <strong>HttpServletresponse</strong>，使得测试必须依赖于Web容器。</li><li><strong>Struts 2</strong> 中，可以不传入这两个参数，可以通过其它方式访问它们。因此，Action不依赖于容器，允许Action脱离容器单独被测试<h3 id="对表单数据的封装"><a href="#对表单数据的封装" class="headerlink" title="对表单数据的封装"></a>对表单数据的封装</h3></li><li><strong>Struts 1</strong> 中，使用ActionForm来封装表单数据，所有的ActionForm必须继承<strong>org.apache.struts.action.ActionForm</strong>，有可能造成ActionForm类和VO类重复编码。</li><li><strong>Struts 2</strong> 中，直接在Action中编写表单数据相对应的属性，可以不用编写ActionForm，并且这些属性可以通过Web页面上的标签访问。</li></ul><h2 id="Struts-2-工作规则"><a href="#Struts-2-工作规则" class="headerlink" title="Struts 2 工作规则"></a><strong>Struts 2</strong> 工作规则</h2><h3 id="常用的组件"><a href="#常用的组件" class="headerlink" title="常用的组件"></a>常用的组件</h3><ul><li>FilterDispatcher过滤器</li><li>JSP</li><li>Action</li><li>JavaBean</li><li>配置文件等</li></ul><h3 id="工作规则"><a href="#工作规则" class="headerlink" title="工作规则"></a>工作规则</h3><p>对于一个动作，执行步骤如下：</p><pre><code>1.用户输入，JSP表单的请求被FilterDispatcher截获。2.FilterDispatcher将表单信息转交给Action，并封装在Action内。3.Action调用JavaBean（DAO）。4.Action返回要跳转到的JSP页面逻辑名称给框架。5.框架根据逻辑名称找到相应的网页地址，进行跳转，结果在JSP上显示。</code></pre><h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><p>Myeclipse导入<strong>Struts 2</strong>之后需要配置WEB-INF/web.xml文件。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee"</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"</span> <span class="attr">id</span>=<span class="string">"WebApp_ID"</span> <span class="attr">version</span>=<span class="string">"3.1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">display-name</span>&gt;</span>XiTi12<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>struts2<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>struts2<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.action<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>表示使用org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter过滤器来拦截求，并起名为struts2，过滤目标为项目下的所有资源。</p><p><strong>Struts 2</strong> 中的配置文佳一般为struts.xml，放到WEB-INF/classes目录中，编写时放在项目的src根目录下。下面是在struts.xml中配置Action以及相关虚拟页面名称：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"struts2"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"query"</span> <span class="attr">class</span>=<span class="string">"prj12.QueryAction"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"success"</span>&gt;</span>/show.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"fail"</span>&gt;</span>/query.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>extends属性表示继承一个默认的配置文件struts-default，一般都继承它。<code>&lt;action&gt;</code>中的那么属性表示Action被提交是的路径，class指定动作类的路径，在jsp中表单要提交的路径：“/prj12/query.action”，这是WebWork风格，“.action”是默认情况下规定的。<code>&lt;result&gt;</code>表示的就是虚拟名称和实际页面的映射。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶--&gt;
+&lt;h1 id=&quot;Struts-2框架&quot;&gt;
+      
+    
+    </summary>
+    
+      <category term="JavaEE" scheme="https://codesong.work/categories/JavaEE/"/>
+    
+    
+      <category term="Struts" scheme="https://codesong.work/tags/Struts/"/>
+    
+      <category term="Struts2" scheme="https://codesong.work/tags/Struts2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Struts2相关</title>
+    <link href="https://codesong.work/posts/54de75b4.html"/>
+    <id>https://codesong.work/posts/54de75b4.html</id>
+    <published>2020-06-26T12:00:09.000Z</published>
+    <updated>2020-06-26T12:25:49.097Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶--><h1 id="在Action中访问Web对象"><a href="#在Action中访问Web对象" class="headerlink" title="#在Action中访问Web对象"></a>#在Action中访问Web对象</h1><p>request、response、application、session对象获取：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.struts2.ServletActionContext;</span><br><span class="line"><span class="keyword">import</span> com.opensymphony.xwork2.ActionContext;</span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    <span class="comment">//获取request对象</span></span><br><span class="line">    HttpServletRequest request = ServletActionContext.getRequest();</span><br><span class="line">    <span class="comment">//获取reponse对象</span></span><br><span class="line">    HttpServletResponse response = ServletActionContext.getResponse();</span><br><span class="line">    <span class="comment">//获取application对象</span></span><br><span class="line">    ServletContext application = ServletActionContext.getServletContext();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取Session对象</span></span><br><span class="line">    Map session = ActionContext.getContext().getSession();</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p><p>这里的Session是个Map对象。在Struts2中，底层的Session被封装成了Map类型，可以直接操作这个map进行对session的写入和读取操作，而不是直接去操作HttpSession（）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶--&gt;
+&lt;h1 id=&quot;在Action中访问We
+      
+    
+    </summary>
+    
+      <category term="JavaEE" scheme="https://codesong.work/categories/JavaEE/"/>
+    
+    
+      <category term="Struts2" scheme="https://codesong.work/tags/Struts2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hibernate的动态实体模型</title>
+    <link href="https://codesong.work/posts/a72cd1a3.html"/>
+    <id>https://codesong.work/posts/a72cd1a3.html</id>
+    <published>2020-06-22T14:53:53.000Z</published>
+    <updated>2020-06-22T15:02:39.810Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶--><p>在Hibernate中对数据库进行操作，有一种方法可以不用定义JavaBean(PO)。就是利用 <strong>动态实体模型</strong> </p><p>Session对对象进行操作的<strong>函数</strong>有两个版本，分别是对JavaBean操作和对动态实体模型进行操作</p><h1 id="映射文件修改"><a href="#映射文件修改" class="headerlink" title="映射文件修改"></a><strong>映射文件修改</strong></h1><p>在动态实体模型中，由于不存在PO，映射文件需要进行相应的修改，例：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"po.Book"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p><strong>改为：</strong></p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">entity-name</span>=<span class="string">"Book_entity"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br></pre></td></tr></table></figure><p>并在各个属性的映射命令内指定数据类型，修改后内容如下：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" </span></span><br><span class="line"><span class="meta">"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">class</span>  <span class="attr">entity-name</span>=<span class="string">"Book_entity"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"bookId"</span> <span class="attr">column</span>=<span class="string">"BOOKID"</span> <span class="attr">type</span>=<span class="string">"java.lang.Integer"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"assigned"</span> /&gt;</span><span class="comment">&lt;!--主键的生成策略，assigned表示由用户赋值--&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookName"</span> <span class="attr">column</span>=<span class="string">"BOOKNAME"</span> <span class="attr">type</span>=<span class="string">"java.lang.String"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookPrice"</span> <span class="attr">column</span>=<span class="string">"BOOKPRICE"</span> <span class="attr">type</span>=<span class="string">"java.lang.Double"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure><ul><li>对动态实体模型操作的函数内内传入的第一个参数为<strong>Book_entity（entity-name）</strong> 是动态实体模型的实体名，第二个为主键值。并且，在Hibernate中，动态实体用HashMap来表达：<strong>key表示动态实体内的属性名称，value表示值</strong> </li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">HashMap hm = (HashMap)session.get(<span class="string">"Book_entity"</span>,<span class="number">1</span>);</span><br><span class="line">hm.get(<span class="string">"bookName"</span>);<span class="comment">//将返回查询到的实体的bookName属性值，通过key来访问value</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶--&gt;
+&lt;p&gt;在Hibernate中对数据库进行
+      
+    
+    </summary>
+    
+      <category term="JavaEE" scheme="https://codesong.work/categories/JavaEE/"/>
+    
+    
+      <category term="Hibernate" scheme="https://codesong.work/tags/Hibernate/"/>
+    
+      <category term="动态实体模型" scheme="https://codesong.work/tags/%E5%8A%A8%E6%80%81%E5%AE%9E%E4%BD%93%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hibernate框架</title>
+    <link href="https://codesong.work/posts/d85fbc26.html"/>
+    <id>https://codesong.work/posts/d85fbc26.html</id>
+    <published>2020-06-22T14:34:42.000Z</published>
+    <updated>2020-06-22T14:55:01.623Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶--><h1 id="Hibernate框架"><a href="#Hibernate框架" class="headerlink" title="Hibernate框架"></a>Hibernate框架</h1><p><em>Hibernate是Java中对象和关系的映射的解决方案，将数据库中的一条记录看成一个Java对象，大大方便了编程，提高了可维护性</em></p><ul><li>ORMapping（对象关系映射）<br>  是软件开发过程中数据库层比较流行的设计思想。<strong>Hibernate就是为了规范ORMapping开发而发布的一个框架。</strong> 类似的还有iBATIS、EntityBean等。</li></ul><p>&emsp;&emsp;在某些大型应用场合，对数据库中的记录进行操作，Inset，Delete，Update，Select等。为了符合MVC模式，可以在DAO里面实现，但也由此引出一个问题，DAO开发人员必须懂得数据库的复杂操作，如果数据库改变时DAO的代码必须改变，如： <strong>当数据库的表有所改动时，DAO里的代码也要改动，这样带来了很大不便。</strong> 很多时候SQL语句的结构基本不变，变化的只是表名，列名等。所以Hibernate将表名和列名进行封装，使DAO的开发人员看起来像是对对象进行操作。</p><p>&emsp;&emsp;在JavaBean中封装了数据库中的持久化信息，因此称为 <strong>PO（Persistence Object）</strong> 。在ORMapping中，一个PO对象一般表示数据表中的一条记录，只是对这个记录的操作可以简化成对这个Bean对象的操作，操作之后数据库中的记录相应变化，Hibernate框架中提供了一些能够对这些对象进行操作的函数。</p><hr><h2 id="常用组件："><a href="#常用组件：" class="headerlink" title="常用组件："></a>常用组件：</h2><pre><code>* PO（Persistence Object）* 框架API* Hibernate配置文件* Hibernate映射文件等</code></pre><h2 id="Hibernate框架的工作规则："><a href="#Hibernate框架的工作规则：" class="headerlink" title="Hibernate框架的工作规则："></a>Hibernate框架的工作规则：</h2><p>对一个数据库进行操作，执行步骤如下：</p><pre><code>1.框架API通过读取Hibernate配置文件，连接数据库2.当对PO进行操作时，框架API通过Hibernate映射文件，来决定决定操作的表明和列名3.框架API执行SQL语句</code></pre><p>所以需要提前完成以下几个步骤：</p><pre><code>1.编写Hibernate配置文件，里面有连接到数据库需要的信息2.编写对应记录的类（PO）3.编写Hibernate映射文件，将PO和表映射，PO中的属性和表中的列映射4.编写DAO，使用Hibernate进行数据库操作</code></pre><h1 id="Hibernate配置文件"><a href="#Hibernate配置文件" class="headerlink" title="Hibernate配置文件"></a>Hibernate配置文件</h1><p><em>hibernate.cfg.xml默认在src目录下，该文件主要是为了连接到数据库</em><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-configuration PUBLIC</span></span><br><span class="line"><span class="meta">          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"</span></span><br><span class="line"><span class="meta">          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Generated by MyEclipse Hibernate Tools.                   --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">session-factory</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.username"</span>&gt;</span>root<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.url"</span>&gt;</span></span><br><span class="line">jdbc:mysql://localhost:3306/javabean</span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dialect"</span>&gt;</span></span><br><span class="line">org.hibernate.dialect.MySQLDialect<span class="comment">&lt;!--连接的是MySQL数据库 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.password"</span>&gt;</span>root<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.driver_class"</span>&gt;</span></span><br><span class="line">com.mysql.jdbc.Driver <span class="comment">&lt;!--MySQL数据库连接驱动版本5 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">session-factory</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p><h1 id="编写PO"><a href="#编写PO" class="headerlink" title="编写PO"></a>编写PO</h1><ul><li>根据JavaBean规范编写即可</li><li>编写后这个类目前是无法被系统识别的，因为不清楚和数据库表的关系。因此需要编写一个 <strong>配置文件</strong> <h1 id="PO配置文件"><a href="#PO配置文件" class="headerlink" title="PO配置文件"></a>PO配置文件</h1><blockquote><p>一般和PO放在同一个包下，通常命名为 <strong>po名+“.hbm.xml”</strong> ,例如 <strong>Book.hbm.xml</strong> </p></blockquote></li></ul><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" </span></span><br><span class="line"><span class="meta">"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"po.Book"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"bookId"</span> <span class="attr">column</span>=<span class="string">"BOOKID"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"assigned"</span> /&gt;</span><span class="comment">&lt;!--主键的生成策略，assigned表示由用户赋值--&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookName"</span> <span class="attr">column</span>=<span class="string">"BOOKNAME"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookPrice"</span> <span class="attr">column</span>=<span class="string">"BOOKPRICE"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure><p>这就是配置文件的内容模板了，可以有多个<class></class>，多个表多个类的映射。<br>还需要将此文件在hibernate.cfg.xml文件中注册，使得系统能正确识别文件：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">hibernate-configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">session-factory</span>&gt;</span></span><br><span class="line">...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;<span class="name">mapping</span> <span class="attr">resource</span>=<span class="string">"po/Book.hbn.xml"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">session-factory</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶--&gt;
+&lt;h1 id=&quot;Hibernate框架&quot;
+      
+    
+    </summary>
+    
+      <category term="JavaEE" scheme="https://codesong.work/categories/JavaEE/"/>
+    
+    
+      <category term="Hibernate" scheme="https://codesong.work/tags/Hibernate/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>利用Hibernate进行简单数据库操作</title>
+    <link href="https://codesong.work/posts/246b5d28.html"/>
+    <id>https://codesong.work/posts/246b5d28.html</id>
+    <published>2020-06-22T12:54:10.000Z</published>
+    <updated>2020-06-22T13:52:26.007Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶--><!-- # 利用Hibernate进行数据库操作 --><p><strong>Session代表与数据库之间的一次操作，获取Session之后就可以使用Session对数据库进行操作，工作完成后需要关闭：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.close()</span><br></pre></td></tr></table></figure></p><h1 id="Session获取方式一："><a href="#Session获取方式一：" class="headerlink" title="Session获取方式一："></a>Session获取方式一：</h1><ul><li>读取Hibernate配置文件，使用org.hibernate.cfg.configuration类读取配置文件。 使用方法： <strong>configure()</strong>，读取默认的hibernate.cfg.xml文件</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Configuration conf = <span class="keyword">new</span> Configuration().configure();</span><br></pre></td></tr></table></figure><ul><li><p>Hibernate中，数据库操作是用 <strong>org.hibernate.Session</strong> 完成的， <strong>Session</strong> 由 <strong>org.hibernate.SessionFactory</strong> 管理，生成 <strong>SessionFactory</strong> 代码：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SessionFactory sf = conf.buildSessionFactory();</span><br></pre></td></tr></table></figure></li><li><p>利用 <strong>SessionFactory</strong> 打开Session：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Session session = sf.openSession();</span><br></pre></td></tr></table></figure></li></ul><h1 id="Session获取方式二："><a href="#Session获取方式二：" class="headerlink" title="Session获取方式二："></a>Session获取方式二：</h1><p><strong>在Myeclipse中也提供了一个专门负责进行Session生成的类</strong></p><ul><li><p>创建一个<strong>util</strong>包，包下创建一个文件，右键后选择<strong>Other…</strong> 在弹出的页面选择 <strong>Hibernate</strong>—&gt;<strong>Hibernate Session Factory</strong></p></li><li><p>该类有两个静态方法，<strong>getSession</strong>和<strong>closeSession</strong>，用来生成和关闭<strong>Session</strong>，它用到了很多优化的机制，比较高效。</p></li></ul><p>打开Session：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Session session = util.HibernateSessionFactory.getSession();</span><br></pre></td></tr></table></figure></p><p>关闭Session：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">util.HibernateSessionFactory.closeSession();</span><br></pre></td></tr></table></figure></p><h1 id="对数据库增删改查"><a href="#对数据库增删改查" class="headerlink" title="对数据库增删改查"></a>对数据库增删改查</h1><p><strong>注意：</strong> Session的事务不是自动提交的，如果需要对数据库进行增、删、改操作，默认情况下需要开启一个事务（org.hibernate.Transaction），如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Transaction tran = session.beginTransaction();</span><br><span class="line">...<span class="comment">//数据库改动</span></span><br><span class="line">tran.commit();</span><br></pre></td></tr></table></figure></p><h2 id="添加操作"><a href="#添加操作" class="headerlink" title="添加操作"></a>添加操作</h2><ul><li><p>利用Session将数据保存到数据库中：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Session.save(Object);<span class="comment">//如果存在主键冲突则抛出异常</span></span><br></pre></td></tr></table></figure></li><li><p>保存或者覆盖：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Session.saveOrUpdate(Object);<span class="comment">//如果主键存在则修改记录，否则保存</span></span><br></pre></td></tr></table></figure></li></ul><h2 id="查询操作"><a href="#查询操作" class="headerlink" title="查询操作"></a>查询操作</h2><p><strong>最简单的查询：</strong> 根据主键查询一条记录</p><blockquote><p>Object Session.get(PO对应的类，主键)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Book book = (Book)session.get(Book.class,<span class="string">"001"</span>);</span><br></pre></td></tr></table></figure></p></blockquote><p>不存在则返回<strong>null</strong></p><h2 id="修改操作"><a href="#修改操作" class="headerlink" title="修改操作"></a>修改操作</h2><p>利用Session将修改后的数据写入数据库：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Sesson.update(Object);</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">Session.saveOrUpdate(Object);</span><br></pre></td></tr></table></figure></p><p>如果主键存在则修改记录，否则保存</p><h2 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h2><p>利用Session删除记录： </p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Session.delete(Object);</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶--&gt;
+&lt;!-- # 利用Hibernate进行
+      
+    
+    </summary>
+    
+      <category term="JavaEE" scheme="https://codesong.work/categories/JavaEE/"/>
+    
+    
+      <category term="Hibernate" scheme="https://codesong.work/tags/Hibernate/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Struts框架</title>
+    <link href="https://codesong.work/posts/e61e5360.html"/>
+    <id>https://codesong.work/posts/e61e5360.html</id>
+    <published>2020-06-22T07:55:45.000Z</published>
+    <updated>2020-06-22T13:52:51.060Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶--><h1 id="Struts框架"><a href="#Struts框架" class="headerlink" title="Struts框架"></a>Struts框架</h1><p><strong>为了规范MVC开发而发布的一个框架，类似的还有WebWork，SpringMVC等</strong></p><hr><h1 id="常用的组件有："><a href="#常用的组件有：" class="headerlink" title="常用的组件有："></a>常用的组件有：</h1><ul><li>JSP</li><li>ActionServlet</li><li>ActionForm</li><li>Action</li><li>JavaBean</li><li>配置文件</li></ul><h1 id="Struts工作规则"><a href="#Struts工作规则" class="headerlink" title="Struts工作规则:"></a>Struts工作规则:</h1><pre><code>1.用户输入，JSP表单提交给ActionServlet2.ActionServlet将表单封装到ActionForm内，转交给Action3.ActionServlet并不直接处理业务逻辑，而是让Action来调用JavaBean（DAO）4.Action返回要跳转的JSP页面地址给ActionServlet 5.ActionServlet进行跳转，结果在JSP上显示</code></pre><h2 id="ActionServlet"><a href="#ActionServlet" class="headerlink" title="ActionServlet"></a>ActionServlet</h2><p>ActionServlet无需自己实现，在web.xml文件内的配置（Myeclipse）中可自动生成<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.apache.struts.action.ActionServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>config<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>/WEB-INF/struts-config.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>debug<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>detail<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>0<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></p><h2 id="ActionForm"><a href="#ActionForm" class="headerlink" title="ActionForm"></a>ActionForm</h2><ul><li><strong>ActionForm必须继承org.apache.struts.action.ActionForm</strong></li><li><strong>必须在struts-config.xml中进行注册:</strong><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form-beans</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">form-bean</span> </span></span><br><span class="line"><span class="tag">                <span class="attr">name</span>=<span class="string">"loginForm"</span>  </span></span><br><span class="line"><span class="tag">                <span class="attr">type</span>=<span class="string">"LoginAction.LoginForm"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">form-bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form-beans</span>&gt;</span></span><br></pre></td></tr></table></figure></li></ul><h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><ul><li><strong>Action必须继承org.apache.struts.action.Action</strong></li><li><strong>必须重写execute方法，该方法处理业务逻辑，ActionServlet会自动调用该方法，返回要跳转的JSP页面地址。在底层通过反射机制进行</strong></li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ActionForward <span class="title">execute</span><span class="params">(ActionMapping mapping, LoginForm form, HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;&#125;</span><br></pre></td></tr></table></figure><ul><li><strong>必须在struts-config.xml中进行注册:</strong><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">action-mappings</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">path</span>=<span class="string">"/login"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">name</span>=<span class="string">"loginForm"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">"com.yourcompany.struts.action.LoginAction"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">action-mappings</span>&gt;</span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶--&gt;
+&lt;h1 id=&quot;Struts框架&quot;&gt;&lt;a
+      
+    
+    </summary>
+    
+      <category term="JavaEE" scheme="https://codesong.work/categories/JavaEE/"/>
+    
+    
+      <category term="struts" scheme="https://codesong.work/tags/struts/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MVC模式</title>
+    <link href="https://codesong.work/posts/c0bd5abd.html"/>
+    <id>https://codesong.work/posts/c0bd5abd.html</id>
+    <published>2020-06-19T09:10:48.000Z</published>
+    <updated>2020-06-22T13:13:41.145Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 --><h1 id="MVC设计模式（设计思想）"><a href="#MVC设计模式（设计思想）" class="headerlink" title="MVC设计模式（设计思想）"></a>MVC设计模式（设计思想）</h1><h2 id="软件开发过程中比较流行的设计思想"><a href="#软件开发过程中比较流行的设计思想" class="headerlink" title="软件开发过程中比较流行的设计思想"></a><em>软件开发过程中比较流行的设计思想</em></h2><p><strong>M</strong>（Model模型）:封装应用程序的数据结构和事物逻辑，为视图服务</p><ul><li>JavaBean（DAO）</li></ul><p><strong>V</strong>（View视图）:模型的外在表现，模型状态改变时，有所体现</p><ul><li>JSP</li></ul><p><strong>C</strong>（Controller控制器）:对用户的输入进行响应，将模型和视图联系到一起，负责将数据写到模型中，并调用视图</p><ul><li>Servlet</li></ul><p>&nbsp;&nbsp;将程序分成了不同的三个模块，显示，业务逻辑，过程控制都各自独立，软件可伸缩性和可维护性都有了很大的优势。</p><p><strong>步骤如下：</strong></p><pre><code>1.Servlet（Controller）接收参数，封装到JavaBean（Model）2.调用Javabean（Model）的方法查询数据库，结果暂存在JavaBean（Model）3.Servlet（Controller）跳转到JSP（View），就是JSP（View）使用JavaBean（model），得到结果并且显示</code></pre>]]></content>
     
     <summary type="html">
     
