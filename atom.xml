@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://codesong.work/"/>
-  <updated>2020-09-23T07:50:49.128Z</updated>
+  <updated>2020-09-23T12:12:30.090Z</updated>
   <id>https://codesong.work/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mybatis的mapper.xml（映射）传入参数方式</title>
+    <link href="https://codesong.work/posts/b705a9cd.html"/>
+    <id>https://codesong.work/posts/b705a9cd.html</id>
+    <published>2020-09-23T12:02:11.000Z</published>
+    <updated>2020-09-23T12:12:30.090Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶-->]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶--&gt;
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>事务是什么？</title>
