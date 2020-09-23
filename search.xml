@@ -50,7 +50,9 @@ tags:标签
 categories:分类
 copyright:版权
 comments: true    是否可评论 .
-top:false 是否置顶-->]]></content>
+top:false 是否置顶-->
+<p>这是一个链接 <a href="https://blog.csdn.net/qq_35423108/article/details/76255202" target="_blank" rel="noopener">CSDN的文章</a></p>
+]]></content>
   </entry>
   <entry>
     <title>事务是什么？</title>
