@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://codesong.work/"/>
-  <updated>2020-06-26T12:25:49.094Z</updated>
+  <updated>2020-09-23T07:50:49.128Z</updated>
   <id>https://codesong.work/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>事务是什么？</title>
+    <link href="https://codesong.work/posts/f8718450.html"/>
+    <id>https://codesong.work/posts/f8718450.html</id>
+    <published>2020-09-23T07:38:37.000Z</published>
+    <updated>2020-09-23T07:50:49.128Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶--><p><em>在数据库中,所谓事务是指一组逻辑操作单元,有多个添加，多个修改，多个删除，连接到一起一次执行，要么成功要么失败</em></p><p><em>事务的操作:先定义开始一个事务,然后对数据作修改操作,这时如果提交(COMMIT),这些修改就永久地保存下来,如果回退(ROLLBACK),数据库管理系统将放弃所作的所有修改而回到开始事务时的状态</em></p><h3 id="事务的ACID-acid-属性"><a href="#事务的ACID-acid-属性" class="headerlink" title="事务的ACID(acid)属性"></a>事务的ACID(acid)属性</h3><ol><li><strong>原子性</strong>（Atomicity）原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。 </li><li><strong>一致性</strong>（Consistency）事务必须使数据库从一个一致性状态变换到另外一个一致性状态,主键约束与外键约束。</li><li><strong>隔离性</strong>（Isolation）事务的隔离性是指一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。</li><li><strong>持久性</strong>（Durability）持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来的其他操作和数据库故障不应该对其有任何影响</li></ol><h3 id="JDBC的事务处理"><a href="#JDBC的事务处理" class="headerlink" title="JDBC的事务处理"></a>JDBC的事务处理</h3><p>事务处理：保证所有事务都作为一个工作单元来执行，即使出现了故障，都不能改变这种执行方式。</p><p>当在一个事务中执行多个操作时，</p><p><strong>要么</strong>所有的事务都被提交(commit)</p><p><strong>要么</strong>整个事务回滚(rollback)到最初状态</p><p>当一个连接对象被创建时，默认情况下是自动提交事务：</p><p>每次执行一个 SQL 语句时，如果执行成功，就会向数据库自动提交，而不能回滚</p><p><strong>为了让多个 SQL 语句作为一个事务执行：</strong></p><ol><li><p>调用 Connection 对象的 setAutoCommit(false); 以取消自动提交事务</p></li><li><p>在所有的 SQL 语句都成功执行后，调用 commit(); 方法提交事务</p></li><li><p>在出现异常时，调用 rollback(); 方法回滚事务</p></li><li><p>若此时 Connection 没有被关闭, 则需要恢复其自动提交状态</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶--&gt;
+&lt;p&gt;&lt;em&gt;在数据库中,所谓事务是指一
+      
+    
+    </summary>
+    
+      <category term="数据库" scheme="https://codesong.work/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="事务" scheme="https://codesong.work/tags/%E4%BA%8B%E5%8A%A1/"/>
+    
+      <category term="JDBC" scheme="https://codesong.work/tags/JDBC/"/>
+    
+  </entry>
   
   <entry>
     <title>Struts2与Struts1的区别</title>
