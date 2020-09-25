@@ -66,6 +66,15 @@ top:false 是否置顶-->
 </ol>
 <h2 id="执行new指令之后"><a href="#执行new指令之后" class="headerlink" title="执行new指令之后"></a>执行new指令之后</h2><p> 调用对象的<strong>实例构造器</strong>（init方法），对实例的属性进行设置，按照程序员的意愿进行初始化，这样一个真正可用的对象就诞生啦！</p>
 ]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>内存</tag>
+        <tag>JVM</tag>
+        <tag>虚拟机</tag>
+      </tags>
   </entry>
   <entry>
     <title>Mybatis的mapper.xml（映射）传入参数方式</title>
@@ -177,8 +186,8 @@ top:false 是否置顶-->
         <category>JavaEE</category>
       </categories>
       <tags>
-        <tag>Struts</tag>
         <tag>Struts2</tag>
+        <tag>Struts</tag>
       </tags>
   </entry>
   <entry>

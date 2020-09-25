@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://codesong.work/"/>
-  <updated>2020-09-25T03:10:37.973Z</updated>
+  <updated>2020-09-25T03:48:01.806Z</updated>
   <id>https://codesong.work/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://codesong.work/posts/def49b5c.html"/>
     <id>https://codesong.work/posts/def49b5c.html</id>
     <published>2020-09-25T03:00:09.000Z</published>
-    <updated>2020-09-25T03:10:37.973Z</updated>
+    <updated>2020-09-25T03:48:01.806Z</updated>
     
     <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶--><h1 id="new一个Java对象"><a href="#new一个Java对象" class="headerlink" title="new一个Java对象"></a>new一个Java对象</h1><p>在Java程序的运行过程中每时每刻都有对象在生生死死，这篇文章将会简单讨论对象的创建过程（指普通的Java对象，不包括数组和Class等对象）</p><h2 id="当虚拟机遇到一条new指令时"><a href="#当虚拟机遇到一条new指令时" class="headerlink" title="当虚拟机遇到一条new指令时"></a>当虚拟机遇到一条<strong>new</strong>指令时</h2><ol><li>首先会查看对象对应的类是否被加载到内存中，如果没有则需要进行相应的类加载过程（加载、解析、初始化等）。</li><li><p>在类的加载检查通过之后，虚拟机将会为新生对象分配内存（从堆中划分一块对象所需的内存）根据使用的垃圾收集器不同，使用不同的分配机制：</p><ul><li><strong>指针碰撞</strong>：当虚拟机使用复制算法或标记整理算法实现的垃圾收集器时，内存区域是规整的，已经被使用的内存放在一边，空闲的在另一边，中间使用一个指针作为分界点的指示器（用来标识两者的分界）。分配内存时，就是将指针向空闲的内存那一边移动一段相应对象需要的内存大小距离。（移动一个对象大小）</li><li><strong>空闲列表</strong>：当虚拟机使用标记清除算法实现的垃圾收集器时，内存区域并不是规整的。可能是已使用的和未被使用的空间相互交错，所以虚拟机需要维护一个列表，上面记录了那些内存是可用的，从中划分一个足够大的内存分配给对象实例，并且更新列表上的记录。</li></ul></li><li><p>实例对象的内存空间分配完成后，虚拟机有可能会对内存空间进行初始化，初始化为<strong>零值</strong>（不包括对象头）。由策略的不同，这一工作有可能在内存分配之前就已经完成。</p></li><li>接下来就是设置对象头信息，比如：所属类、类的元数据，对象的哈希码，GC分代年龄等。</li></ol><h2 id="执行new指令之后"><a href="#执行new指令之后" class="headerlink" title="执行new指令之后"></a>执行new指令之后</h2><p> 调用对象的<strong>实例构造器</strong>（init方法），对实例的属性进行设置，按照程序员的意愿进行初始化，这样一个真正可用的对象就诞生啦！</p>]]></content>
     
@@ -43,6 +43,16 @@ top:false 是否置顶--&gt;
     
     </summary>
     
+      <category term="Java" scheme="https://codesong.work/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="https://codesong.work/tags/Java/"/>
+    
+      <category term="内存" scheme="https://codesong.work/tags/%E5%86%85%E5%AD%98/"/>
+    
+      <category term="JVM" scheme="https://codesong.work/tags/JVM/"/>
+    
+      <category term="虚拟机" scheme="https://codesong.work/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
   </entry>
   
@@ -142,9 +152,9 @@ top:false 是否置顶--&gt;
       <category term="JavaEE" scheme="https://codesong.work/categories/JavaEE/"/>
     
     
-      <category term="Struts" scheme="https://codesong.work/tags/Struts/"/>
-    
       <category term="Struts2" scheme="https://codesong.work/tags/Struts2/"/>
+    
+      <category term="Struts" scheme="https://codesong.work/tags/Struts/"/>
     
   </entry>
   
