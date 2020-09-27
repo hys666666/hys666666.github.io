@@ -40,6 +40,56 @@ cp *Name.key /etc/apache2/ssl
       </tags>
   </entry>
   <entry>
+    <title>MYSQL的MVCC原理</title>
+    <url>/posts/e6aff96f.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<p>MYSQL的MVCC原理 <a href="https://blog.csdn.net/SnailMann/article/details/94724197?utm_medium=distribute.pc_feed_404.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase&amp;depth_1-utm_source=distribute.pc_feed_404.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecas" target="_blank" rel="noopener">CSDN的文章</a></p>
+<p>数据库脏读、事务的四大特性、四大隔离级别、三大范式<a href="https://blog.csdn.net/qq_34569497/article/details/79064208" target="_blank" rel="noopener">CSDN的文章</a></p>
+]]></content>
+      <categories>
+        <category>引用外链文章</category>
+      </categories>
+      <tags>
+        <tag>MYSQL</tag>
+        <tag>数据库</tag>
+        <tag>MVCC</tag>
+        <tag>脏读</tag>
+        <tag>事务</tag>
+        <tag>范式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MYSQL连环13问</title>
+    <url>/posts/7d35c1a.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<p>MYSQL连环13问 <a href="https://mp.weixin.qq.com/s?__biz=MzA4ODIwMDUyNw==&amp;mid=2653000172&amp;idx=1&amp;sn=5ad02a54d6060566c31b04b7ae1e6b24&amp;chksm=8bf8f5ccbc8f7cda33ea881be98c52f742a856206706662581791a6195198f81b3b765814424&amp;mpshare=1&amp;scene=23&amp;srcid=09257ocMCECXUrn4s6v9Cn5a&amp;sharer_sharetime=1601009217041&amp;sharer_shareid=2a1f9bf9c46d0a9a3066b3ca9ec57609#rd" target="_blank" rel="noopener">蓝桥的文章</a></p>
+]]></content>
+      <categories>
+        <category>引用外链文章</category>
+      </categories>
+      <tags>
+        <tag>MYSQL</tag>
+        <tag>索引</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java中new一个对象的创建过程</title>
     <url>/posts/def49b5c.html</url>
     <content><![CDATA[<!-- title:文章标题
@@ -88,8 +138,15 @@ categories:分类
 copyright:版权
 comments: true    是否可评论 .
 top:false 是否置顶-->
-<p>这是一个链接 <a href="https://blog.csdn.net/qq_35423108/article/details/76255202" target="_blank" rel="noopener">CSDN的文章</a></p>
+<p>Mybatis的mapper.xml（映射）传入参数方式 <a href="https://blog.csdn.net/qq_35423108/article/details/76255202" target="_blank" rel="noopener">CSDN的文章</a></p>
 ]]></content>
+      <categories>
+        <category>引用外链文章</category>
+      </categories>
+      <tags>
+        <tag>Mybatis</tag>
+        <tag>映射</tag>
+      </tags>
   </entry>
   <entry>
     <title>事务是什么？</title>
@@ -186,8 +243,8 @@ top:false 是否置顶-->
         <category>JavaEE</category>
       </categories>
       <tags>
-        <tag>Struts2</tag>
         <tag>Struts</tag>
+        <tag>Struts2</tag>
       </tags>
   </entry>
   <entry>
