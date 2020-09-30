@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://codesong.work/"/>
-  <updated>2020-09-25T08:31:43.230Z</updated>
+  <updated>2020-09-27T01:44:52.566Z</updated>
   <id>https://codesong.work/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://codesong.work/posts/e6aff96f.html"/>
     <id>https://codesong.work/posts/e6aff96f.html</id>
     <published>2020-09-25T07:10:11.000Z</published>
-    <updated>2020-09-25T08:31:43.230Z</updated>
+    <updated>2020-09-27T01:44:52.566Z</updated>
     
     <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶--><p>MYSQL的MVCC原理 <a href="https://blog.csdn.net/SnailMann/article/details/94724197?utm_medium=distribute.pc_feed_404.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase&amp;depth_1-utm_source=distribute.pc_feed_404.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecas" target="_blank" rel="noopener">CSDN的文章</a></p><p>数据库脏读、事务的四大特性、四大隔离级别、三大范式<a href="https://blog.csdn.net/qq_34569497/article/details/79064208" target="_blank" rel="noopener">CSDN的文章</a></p>]]></content>
     
@@ -92,9 +92,9 @@ top:false 是否置顶--&gt;
     
       <category term="MYSQL" scheme="https://codesong.work/tags/MYSQL/"/>
     
-      <category term="索引" scheme="https://codesong.work/tags/%E7%B4%A2%E5%BC%95/"/>
-    
       <category term="数据库" scheme="https://codesong.work/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="索引" scheme="https://codesong.work/tags/%E7%B4%A2%E5%BC%95/"/>
     
   </entry>
   
