@@ -92,9 +92,9 @@ top:false 是否置顶--&gt;
     
       <category term="MYSQL" scheme="https://codesong.work/tags/MYSQL/"/>
     
-      <category term="数据库" scheme="https://codesong.work/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
       <category term="索引" scheme="https://codesong.work/tags/%E7%B4%A2%E5%BC%95/"/>
+    
+      <category term="数据库" scheme="https://codesong.work/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
@@ -240,9 +240,9 @@ top:false 是否置顶--&gt;
       <category term="JavaEE" scheme="https://codesong.work/categories/JavaEE/"/>
     
     
-      <category term="Struts" scheme="https://codesong.work/tags/Struts/"/>
-    
       <category term="Struts2" scheme="https://codesong.work/tags/Struts2/"/>
+    
+      <category term="Struts" scheme="https://codesong.work/tags/Struts/"/>
     
   </entry>
   
