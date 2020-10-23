@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://codesong.work/"/>
-  <updated>2020-09-27T01:44:52.566Z</updated>
+  <updated>2020-10-23T06:45:29.889Z</updated>
   <id>https://codesong.work/</id>
   
   <author>
@@ -15,6 +15,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>https和ssl</title>
+    <link href="https://codesong.work/posts/fecc0c01.html"/>
+    <id>https://codesong.work/posts/fecc0c01.html</id>
+    <published>2020-10-23T06:35:46.000Z</published>
+    <updated>2020-10-23T06:45:29.889Z</updated>
+    
+    <content type="html"><![CDATA[<!-- title:文章标题date:创建时间tags:标签  - Java - 编程categories:分类copyright:版权comments: true    是否可评论 .top:false 是否置顶 --><h2 id="HTTPS利用SSL加密的过程图解"><a href="#HTTPS利用SSL加密的过程图解" class="headerlink" title="HTTPS利用SSL加密的过程图解"></a>HTTPS利用SSL加密的过程图解</h2><p><img src="https://s1.ax1x.com/2020/10/23/BANmKs.png" alt="https" style="clear: both;display: block;margin: auto;"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶 --&gt;
+&lt;h2 id=&quot;HTTPS利用SSL加
+      
+    
+    </summary>
+    
+      <category term="计网" scheme="https://codesong.work/categories/%E8%AE%A1%E7%BD%91/"/>
+    
+    
+      <category term="HTTPS" scheme="https://codesong.work/tags/HTTPS/"/>
+    
+      <category term="SSL" scheme="https://codesong.work/tags/SSL/"/>
+    
+      <category term="加密" scheme="https://codesong.work/tags/%E5%8A%A0%E5%AF%86/"/>
+    
+  </entry>
   
   <entry>
     <title>MYSQL的MVCC原理</title>
