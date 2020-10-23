@@ -1,6 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java中new一个对象的创建过程</title>
+    <url>/posts/def49b5c.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<h1 id="new一个Java对象"><a href="#new一个Java对象" class="headerlink" title="new一个Java对象"></a>new一个Java对象</h1><p>在Java程序的运行过程中每时每刻都有对象在生生死死，这篇文章将会简单讨论对象的创建过程（指普通的Java对象，不包括数组和Class等对象）</p>
+<h2 id="当虚拟机遇到一条new指令时"><a href="#当虚拟机遇到一条new指令时" class="headerlink" title="当虚拟机遇到一条new指令时"></a>当虚拟机遇到一条<strong>new</strong>指令时</h2><ol>
+<li>首先会查看对象对应的类是否被加载到内存中，如果没有则需要进行相应的类加载过程（加载、解析、初始化等）。</li>
+<li><p>在类的加载检查通过之后，虚拟机将会为新生对象分配内存（从堆中划分一块对象所需的内存）根据使用的垃圾收集器不同，使用不同的分配机制：</p>
+<ul>
+<li><strong>指针碰撞</strong>：当虚拟机使用复制算法或标记整理算法实现的垃圾收集器时，内存区域是规整的，已经被使用的内存放在一边，空闲的在另一边，中间使用一个指针作为分界点的指示器（用来标识两者的分界）。分配内存时，就是将指针向空闲的内存那一边移动一段相应对象需要的内存大小距离。（移动一个对象大小）</li>
+<li><strong>空闲列表</strong>：当虚拟机使用标记清除算法实现的垃圾收集器时，内存区域并不是规整的。可能是已使用的和未被使用的空间相互交错，所以虚拟机需要维护一个列表，上面记录了那些内存是可用的，从中划分一个足够大的内存分配给对象实例，并且更新列表上的记录。</li>
+</ul>
+</li>
+<li><p>实例对象的内存空间分配完成后，虚拟机有可能会对内存空间进行初始化，初始化为<strong>零值</strong>（不包括对象头）。由策略的不同，这一工作有可能在内存分配之前就已经完成。</p>
+</li>
+<li>接下来就是设置对象头信息，比如：所属类、类的元数据，对象的哈希码，GC分代年龄等。</li>
+</ol>
+<h2 id="执行new指令之后"><a href="#执行new指令之后" class="headerlink" title="执行new指令之后"></a>执行new指令之后</h2><p> 调用对象的<strong>实例构造器</strong>（init方法），对实例的属性进行设置，按照程序员的意愿进行初始化，这样一个真正可用的对象就诞生啦！</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人博客部署免费的https安全证书</title>
+    <url>/posts/ce68fd7a.html</url>
+    <content><![CDATA[<h1 id="个人博客怎么部署免费的https安全证书？"><a href="#个人博客怎么部署免费的https安全证书？" class="headerlink" title="个人博客怎么部署免费的https安全证书？"></a>个人博客怎么部署免费的https安全证书？</h1><p>&emsp;&emsp;首先需要去阿里云申请一个免费的安全证书 <a href="https://www.aliyun.com/product/cas?source=5176.11533457&amp;userCode=l1qstn8f&amp;type=copy" target="_blank" rel="noopener">我是一个超链接</a></p>
+<p>选择免费的证书：<img src="https://s1.ax1x.com/2020/03/26/G9PJte.png" alt="https1"></p>
+<p>免费购买后，在证书控制台申请证书：<img src="https://s1.ax1x.com/2020/03/26/G9Fms1.png" alt="https2"><br>后面接着提交信息，验证，几分钟就会成功了不再阐述 </p>
+<h1 id="将证书部署到服务器上"><a href="#将证书部署到服务器上" class="headerlink" title="将证书部署到服务器上"></a>将证书部署到服务器上</h1><p><strong>服务器系统：Ubuntu</strong></p>
+<p><strong>Web服务器：Apache2</strong></p>
+<h2 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h2><ul>
+<li>从SSL证书控制台下载相应版本的证书</li>
+<li>服务器已安装Open SLL（反正我的是默认有了的）</li>
+</ul>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="在Apache2目录下创建个目录并且将证书文件复制进去"><a href="#在Apache2目录下创建个目录并且将证书文件复制进去" class="headerlink" title="在Apache2目录下创建个目录并且将证书文件复制进去"></a>在Apache2目录下创建个目录并且将证书文件复制进去</h3><pre><code>mkdir /ect/apache2/ssl
+
+cp *public.crt /etc/apache2/ssl
+
+cp *Name.key /etc/apache2/ssl
+</code></pre><h3 id="启用SSL模块"><a href="#启用SSL模块" class="headerlink" title="启用SSL模块"></a>启用SSL模块</h3><pre><code>sudo a2enmod ssl
+</code></pre><h3 id="修改SSL配置文件default-ssl-conf"><a href="#修改SSL配置文件default-ssl-conf" class="headerlink" title="修改SSL配置文件default-ssl.conf"></a>修改SSL配置文件default-ssl.conf</h3><pre><code>vi /etc/apache2/sites-available/default-ssl.conf
+</code></pre><h4 id="参数修改如下："><a href="#参数修改如下：" class="headerlink" title="参数修改如下："></a><strong>参数修改如下：</strong></h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">IfModules</span> <span class="attr">mod_ssl.c</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">VirtualHost</span> *<span class="attr">:443</span>&gt;</span>  </span><br><span class="line">ServerName   #修改为证书绑定的域名www.YourDomainName.com。</span><br><span class="line">SSLCertificateFile /etc/apache2/ssl/www.YourDomainName_public.crt   #将/etc/apache2/ssl/www.YourDomainName.com_public.crt替换为证书文件路径+证书文件名。</span><br><span class="line">SSLCertificateKeyFile /etc/ssl/apache2/www.YourDomainName.com.key   #将/etc/apache2/ssl/www.YourDomainName.com.key替换为证书密钥文件路径+证书密钥文件名。</span><br><span class="line">SSLCertificateChainFile /etc/apache2/ssl/www.YourDomainName.com_chain.crt  #将/etc/apache2/ssl/www.YourDomainName.com_chain.crt替换为证书链文件路径+证书链文件名。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>sites-available：该目录存放的是可用的虚拟主机；</li>
+<li>sites-enabled：该目录存放的是已经启用的虚拟主机。    </li>
+</ul>
+<h3 id="将default-ssl-conf映射至-etc-apache2-sites-enabled文件夹中建立软链接、实现二者之间的自动关联"><a href="#将default-ssl-conf映射至-etc-apache2-sites-enabled文件夹中建立软链接、实现二者之间的自动关联" class="headerlink" title="将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联"></a>将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联</h3><pre><code>sudo ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/001-ssl.conf
+</code></pre><h3 id="重新加载Apache2配置文件"><a href="#重新加载Apache2配置文件" class="headerlink" title="重新加载Apache2配置文件"></a>重新加载Apache2配置文件</h3><pre><code>sudo /etc/init.d/apache2 force-reload
+</code></pre><h3 id="重新启动Apache2"><a href="#重新启动Apache2" class="headerlink" title="重新启动Apache2"></a>重新启动Apache2</h3><pre><code>sudo /etc/init.d/apache2 restart
+或者 sudo apache2ctl restart
+</code></pre><p>&emsp;&emsp;<strong>服务器安装https安全证书完成！</strong></p>
+]]></content>
+      <categories>
+        <category>博客</category>
+      </categories>
+      <tags>
+        <tag>ssl</tag>
+        <tag>https</tag>
+        <tag>安全证书</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>https和ssl</title>
     <url>/posts/fecc0c01.html</url>
     <content><![CDATA[<!-- title:文章标题
@@ -23,6 +97,542 @@ margin: auto;"></p>
         <tag>HTTPS</tag>
         <tag>SSL</tag>
         <tag>加密</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MYSQL的MVCC原理</title>
+    <url>/posts/e6aff96f.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<p>MYSQL的MVCC原理 <a href="https://blog.csdn.net/SnailMann/article/details/94724197?utm_medium=distribute.pc_feed_404.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase&amp;depth_1-utm_source=distribute.pc_feed_404.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecas" target="_blank" rel="noopener">CSDN的文章</a></p>
+<p>数据库脏读、事务的四大特性、四大隔离级别、三大范式<a href="https://blog.csdn.net/qq_34569497/article/details/79064208" target="_blank" rel="noopener">CSDN的文章</a></p>
+]]></content>
+      <categories>
+        <category>引用外链文章</category>
+      </categories>
+      <tags>
+        <tag>MYSQL</tag>
+        <tag>数据库</tag>
+        <tag>MVCC</tag>
+        <tag>脏读</tag>
+        <tag>事务</tag>
+        <tag>范式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MYSQL连环13问</title>
+    <url>/posts/7d35c1a.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<p>MYSQL连环13问 <a href="https://mp.weixin.qq.com/s?__biz=MzA4ODIwMDUyNw==&amp;mid=2653000172&amp;idx=1&amp;sn=5ad02a54d6060566c31b04b7ae1e6b24&amp;chksm=8bf8f5ccbc8f7cda33ea881be98c52f742a856206706662581791a6195198f81b3b765814424&amp;mpshare=1&amp;scene=23&amp;srcid=09257ocMCECXUrn4s6v9Cn5a&amp;sharer_sharetime=1601009217041&amp;sharer_shareid=2a1f9bf9c46d0a9a3066b3ca9ec57609#rd" target="_blank" rel="noopener">蓝桥的文章</a></p>
+]]></content>
+      <categories>
+        <category>引用外链文章</category>
+      </categories>
+      <tags>
+        <tag>MYSQL</tag>
+        <tag>数据库</tag>
+        <tag>索引</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mybatis的mapper.xml（映射）传入参数方式</title>
+    <url>/posts/b705a9cd.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<p>Mybatis的mapper.xml（映射）传入参数方式 <a href="https://blog.csdn.net/qq_35423108/article/details/76255202" target="_blank" rel="noopener">CSDN的文章</a></p>
+]]></content>
+      <categories>
+        <category>引用外链文章</category>
+      </categories>
+      <tags>
+        <tag>Mybatis</tag>
+        <tag>映射</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事务是什么？</title>
+    <url>/posts/f8718450.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<p><em>在数据库中,所谓事务是指一组逻辑操作单元,有多个添加，多个修改，多个删除，连接到一起一次执行，要么成功要么失败</em></p>
+<p><em>事务的操作:先定义开始一个事务,然后对数据作修改操作,这时如果提交(COMMIT),这些修改就永久地保存下来,如果回退(ROLLBACK),数据库管理系统将放弃所作的所有修改而回到开始事务时的状态</em></p>
+<h3 id="事务的ACID-acid-属性"><a href="#事务的ACID-acid-属性" class="headerlink" title="事务的ACID(acid)属性"></a>事务的ACID(acid)属性</h3><ol>
+<li><strong>原子性</strong>（Atomicity）原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。 </li>
+<li><strong>一致性</strong>（Consistency）事务必须使数据库从一个一致性状态变换到另外一个一致性状态,主键约束与外键约束。</li>
+<li><strong>隔离性</strong>（Isolation）事务的隔离性是指一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。</li>
+<li><strong>持久性</strong>（Durability）持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来的其他操作和数据库故障不应该对其有任何影响</li>
+</ol>
+<h3 id="JDBC的事务处理"><a href="#JDBC的事务处理" class="headerlink" title="JDBC的事务处理"></a>JDBC的事务处理</h3><p>事务处理：保证所有事务都作为一个工作单元来执行，即使出现了故障，都不能改变这种执行方式。</p>
+<p>当在一个事务中执行多个操作时，</p>
+<p><strong>要么</strong>所有的事务都被提交(commit)</p>
+<p><strong>要么</strong>整个事务回滚(rollback)到最初状态</p>
+<p>当一个连接对象被创建时，默认情况下是自动提交事务：</p>
+<p>每次执行一个 SQL 语句时，如果执行成功，就会向数据库自动提交，而不能回滚</p>
+<p><strong>为了让多个 SQL 语句作为一个事务执行：</strong></p>
+<ol>
+<li><p>调用 Connection 对象的 setAutoCommit(false); 以取消自动提交事务</p>
+</li>
+<li><p>在所有的 SQL 语句都成功执行后，调用 commit(); 方法提交事务</p>
+</li>
+<li><p>在出现异常时，调用 rollback(); 方法回滚事务</p>
+</li>
+<li><p>若此时 Connection 没有被关闭, 则需要恢复其自动提交状态</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>事务</tag>
+        <tag>JDBC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Struts2与Struts1的区别</title>
+    <url>/posts/422fe07c.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<h1 id="Struts-2框架"><a href="#Struts-2框架" class="headerlink" title="Struts 2框架"></a><strong>Struts 2</strong>框架</h1><p><em>Struts2并没有继承Struts1的特点，反而和WebWork非常类似。因为Struts2是在WebWork的基础上发展出来的，它在各种功能和性能方面都有很好的保证，吸收了Struts1和WebWork的优势，所以它也是一个非常优秀的框架</em></p>
+<h2 id="Struts-2-和Struts-1的不同点："><a href="#Struts-2-和Struts-1的不同点：" class="headerlink" title="Struts 2 和Struts 1的不同点："></a><strong>Struts 2</strong> 和<strong>Struts 1</strong>的不同点：</h2><h3 id="Action类的编写"><a href="#Action类的编写" class="headerlink" title="Action类的编写"></a><strong>Action</strong>类的编写</h3><ul>
+<li><p><strong>Struts 1</strong>中，Action一般继承基类<strong>org.apache.struts.action.Action</strong></p>
+</li>
+<li><p><strong>Struts 2</strong> 中，Action类可以实现一个Action接口，也可以实现其他接口，也可以继承ActionSupport基类，<strong>甚至不用实现任何接口，只编写execute函数即可！</strong></p>
+<h3 id="Action的运行模式"><a href="#Action的运行模式" class="headerlink" title="Action的运行模式"></a><strong>Action</strong>的运行模式</h3></li>
+<li><p><strong>Struts 1</strong> 中，Action是单态的，系统实例化一个对象来处理多个请求，为每个请求分配一个线程，在该线程中运行execute函数。因此在开发中需要特别小心，Action资源必须是线程安全的或同步的。</p>
+</li>
+<li><p><strong>Struts 2</strong>中，Action为每个请求产生一个实例，不会产生线程安全问题，并且系统能及时回收资源垃圾，不会有废弃空间的问题。</p>
+<h3 id="对Wbe容器的依赖"><a href="#对Wbe容器的依赖" class="headerlink" title="对Wbe容器的依赖"></a>对Wbe容器的依赖</h3></li>
+<li>Struts 1 中，Action的execute函数，传入了<strong>Servlet API：HttpServletRequest</strong> 和 <strong>HttpServletresponse</strong>，使得测试必须依赖于Web容器。</li>
+<li><strong>Struts 2</strong> 中，可以不传入这两个参数，可以通过其它方式访问它们。因此，Action不依赖于容器，允许Action脱离容器单独被测试<h3 id="对表单数据的封装"><a href="#对表单数据的封装" class="headerlink" title="对表单数据的封装"></a>对表单数据的封装</h3></li>
+<li><strong>Struts 1</strong> 中，使用ActionForm来封装表单数据，所有的ActionForm必须继承<strong>org.apache.struts.action.ActionForm</strong>，有可能造成ActionForm类和VO类重复编码。</li>
+<li><strong>Struts 2</strong> 中，直接在Action中编写表单数据相对应的属性，可以不用编写ActionForm，并且这些属性可以通过Web页面上的标签访问。</li>
+</ul>
+<h2 id="Struts-2-工作规则"><a href="#Struts-2-工作规则" class="headerlink" title="Struts 2 工作规则"></a><strong>Struts 2</strong> 工作规则</h2><h3 id="常用的组件"><a href="#常用的组件" class="headerlink" title="常用的组件"></a>常用的组件</h3><ul>
+<li>FilterDispatcher过滤器</li>
+<li>JSP</li>
+<li>Action</li>
+<li>JavaBean</li>
+<li>配置文件等</li>
+</ul>
+<h3 id="工作规则"><a href="#工作规则" class="headerlink" title="工作规则"></a>工作规则</h3><p>对于一个动作，执行步骤如下：</p>
+<pre><code>1.用户输入，JSP表单的请求被FilterDispatcher截获。
+2.FilterDispatcher将表单信息转交给Action，并封装在Action内。
+3.Action调用JavaBean（DAO）。
+4.Action返回要跳转到的JSP页面逻辑名称给框架。
+5.框架根据逻辑名称找到相应的网页地址，进行跳转，结果在JSP上显示。
+</code></pre><h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><p>Myeclipse导入<strong>Struts 2</strong>之后需要配置WEB-INF/web.xml文件。<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee"</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"</span> <span class="attr">id</span>=<span class="string">"WebApp_ID"</span> <span class="attr">version</span>=<span class="string">"3.1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">display-name</span>&gt;</span>XiTi12<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>struts2<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>struts2<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.action<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>表示使用org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter过滤器来拦截求，并起名为struts2，过滤目标为项目下的所有资源。</p>
+<p><strong>Struts 2</strong> 中的配置文佳一般为struts.xml，放到WEB-INF/classes目录中，编写时放在项目的src根目录下。下面是在struts.xml中配置Action以及相关虚拟页面名称：<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"struts2"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"query"</span> <span class="attr">class</span>=<span class="string">"prj12.QueryAction"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"success"</span>&gt;</span>/show.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"fail"</span>&gt;</span>/query.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>extends属性表示继承一个默认的配置文件struts-default，一般都继承它。<code>&lt;action&gt;</code>中的那么属性表示Action被提交是的路径，class指定动作类的路径，在jsp中表单要提交的路径：“/prj12/query.action”，这是WebWork风格，“.action”是默认情况下规定的。<code>&lt;result&gt;</code>表示的就是虚拟名称和实际页面的映射。</p>
+]]></content>
+      <categories>
+        <category>JavaEE</category>
+      </categories>
+      <tags>
+        <tag>Struts</tag>
+        <tag>Struts2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Struts2相关</title>
+    <url>/posts/54de75b4.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<h1 id="在Action中访问Web对象"><a href="#在Action中访问Web对象" class="headerlink" title="#在Action中访问Web对象"></a>#在Action中访问Web对象</h1><p>request、response、application、session对象获取：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.struts2.ServletActionContext;</span><br><span class="line"><span class="keyword">import</span> com.opensymphony.xwork2.ActionContext;</span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    <span class="comment">//获取request对象</span></span><br><span class="line">    HttpServletRequest request = ServletActionContext.getRequest();</span><br><span class="line">    <span class="comment">//获取reponse对象</span></span><br><span class="line">    HttpServletResponse response = ServletActionContext.getResponse();</span><br><span class="line">    <span class="comment">//获取application对象</span></span><br><span class="line">    ServletContext application = ServletActionContext.getServletContext();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取Session对象</span></span><br><span class="line">    Map session = ActionContext.getContext().getSession();</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>这里的Session是个Map对象。在Struts2中，底层的Session被封装成了Map类型，可以直接操作这个map进行对session的写入和读取操作，而不是直接去操作HttpSession（）</p>
+]]></content>
+      <categories>
+        <category>JavaEE</category>
+      </categories>
+      <tags>
+        <tag>Struts2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hibernate的动态实体模型</title>
+    <url>/posts/a72cd1a3.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<p>在Hibernate中对数据库进行操作，有一种方法可以不用定义JavaBean(PO)。就是利用 <strong>动态实体模型</strong> </p>
+<p>Session对对象进行操作的<strong>函数</strong>有两个版本，分别是对JavaBean操作和对动态实体模型进行操作</p>
+<h1 id="映射文件修改"><a href="#映射文件修改" class="headerlink" title="映射文件修改"></a><strong>映射文件修改</strong></h1><p>在动态实体模型中，由于不存在PO，映射文件需要进行相应的修改，例：<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"po.Book"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>改为：</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">entity-name</span>=<span class="string">"Book_entity"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>并在各个属性的映射命令内指定数据类型，修改后内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" </span></span><br><span class="line"><span class="meta">"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">class</span>  <span class="attr">entity-name</span>=<span class="string">"Book_entity"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"bookId"</span> <span class="attr">column</span>=<span class="string">"BOOKID"</span> <span class="attr">type</span>=<span class="string">"java.lang.Integer"</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"assigned"</span> /&gt;</span><span class="comment">&lt;!--主键的生成策略，assigned表示由用户赋值--&gt;</span></span><br><span class="line">  	<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookName"</span> <span class="attr">column</span>=<span class="string">"BOOKNAME"</span> <span class="attr">type</span>=<span class="string">"java.lang.String"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookPrice"</span> <span class="attr">column</span>=<span class="string">"BOOKPRICE"</span> <span class="attr">type</span>=<span class="string">"java.lang.Double"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>对动态实体模型操作的函数内内传入的第一个参数为<strong>Book_entity（entity-name）</strong> 是动态实体模型的实体名，第二个为主键值。并且，在Hibernate中，动态实体用HashMap来表达：<strong>key表示动态实体内的属性名称，value表示值</strong> </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">HashMap hm = (HashMap)session.get(<span class="string">"Book_entity"</span>,<span class="number">1</span>);</span><br><span class="line">hm.get(<span class="string">"bookName"</span>);<span class="comment">//将返回查询到的实体的bookName属性值，通过key来访问value</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>JavaEE</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+        <tag>动态实体模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hibernate框架</title>
+    <url>/posts/d85fbc26.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<h1 id="Hibernate框架"><a href="#Hibernate框架" class="headerlink" title="Hibernate框架"></a>Hibernate框架</h1><p><em>Hibernate是Java中对象和关系的映射的解决方案，将数据库中的一条记录看成一个Java对象，大大方便了编程，提高了可维护性</em></p>
+<ul>
+<li>ORMapping（对象关系映射）<br>  是软件开发过程中数据库层比较流行的设计思想。<strong>Hibernate就是为了规范ORMapping开发而发布的一个框架。</strong> 类似的还有iBATIS、EntityBean等。</li>
+</ul>
+<p>&emsp;&emsp;在某些大型应用场合，对数据库中的记录进行操作，Inset，Delete，Update，Select等。为了符合MVC模式，可以在DAO里面实现，但也由此引出一个问题，DAO开发人员必须懂得数据库的复杂操作，如果数据库改变时DAO的代码必须改变，如： <strong>当数据库的表有所改动时，DAO里的代码也要改动，这样带来了很大不便。</strong> 很多时候SQL语句的结构基本不变，变化的只是表名，列名等。所以Hibernate将表名和列名进行封装，使DAO的开发人员看起来像是对对象进行操作。</p>
+<p>&emsp;&emsp;在JavaBean中封装了数据库中的持久化信息，因此称为 <strong>PO（Persistence Object）</strong> 。在ORMapping中，一个PO对象一般表示数据表中的一条记录，只是对这个记录的操作可以简化成对这个Bean对象的操作，操作之后数据库中的记录相应变化，Hibernate框架中提供了一些能够对这些对象进行操作的函数。</p>
+<hr>
+<h2 id="常用组件："><a href="#常用组件：" class="headerlink" title="常用组件："></a>常用组件：</h2><pre><code>* PO（Persistence Object）
+* 框架API
+* Hibernate配置文件
+* Hibernate映射文件等
+</code></pre><h2 id="Hibernate框架的工作规则："><a href="#Hibernate框架的工作规则：" class="headerlink" title="Hibernate框架的工作规则："></a>Hibernate框架的工作规则：</h2><p>对一个数据库进行操作，执行步骤如下：</p>
+<pre><code>1.框架API通过读取Hibernate配置文件，连接数据库
+2.当对PO进行操作时，框架API通过Hibernate映射文件，来决定决定操作的表明和列名
+3.框架API执行SQL语句
+</code></pre><p>所以需要提前完成以下几个步骤：</p>
+<pre><code>1.编写Hibernate配置文件，里面有连接到数据库需要的信息
+2.编写对应记录的类（PO）
+3.编写Hibernate映射文件，将PO和表映射，PO中的属性和表中的列映射
+4.编写DAO，使用Hibernate进行数据库操作
+</code></pre><h1 id="Hibernate配置文件"><a href="#Hibernate配置文件" class="headerlink" title="Hibernate配置文件"></a>Hibernate配置文件</h1><p><em>hibernate.cfg.xml默认在src目录下，该文件主要是为了连接到数据库</em><br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-configuration PUBLIC</span></span><br><span class="line"><span class="meta">          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"</span></span><br><span class="line"><span class="meta">          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Generated by MyEclipse Hibernate Tools.                   --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">session-factory</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.username"</span>&gt;</span>root<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.url"</span>&gt;</span></span><br><span class="line">		jdbc:mysql://localhost:3306/javabean</span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dialect"</span>&gt;</span></span><br><span class="line">		org.hibernate.dialect.MySQLDialect<span class="comment">&lt;!--连接的是MySQL数据库 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.password"</span>&gt;</span>root<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.driver_class"</span>&gt;</span></span><br><span class="line">		com.mysql.jdbc.Driver <span class="comment">&lt;!--MySQL数据库连接驱动版本5 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">session-factory</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="编写PO"><a href="#编写PO" class="headerlink" title="编写PO"></a>编写PO</h1><ul>
+<li>根据JavaBean规范编写即可</li>
+<li>编写后这个类目前是无法被系统识别的，因为不清楚和数据库表的关系。因此需要编写一个 <strong>配置文件</strong> <h1 id="PO配置文件"><a href="#PO配置文件" class="headerlink" title="PO配置文件"></a>PO配置文件</h1><blockquote>
+<p>一般和PO放在同一个包下，通常命名为 <strong>po名+“.hbm.xml”</strong> ,例如 <strong>Book.hbm.xml</strong> </p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" </span></span><br><span class="line"><span class="meta">"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"po.Book"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"bookId"</span> <span class="attr">column</span>=<span class="string">"BOOKID"</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"assigned"</span> /&gt;</span><span class="comment">&lt;!--主键的生成策略，assigned表示由用户赋值--&gt;</span></span><br><span class="line">  	<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookName"</span> <span class="attr">column</span>=<span class="string">"BOOKNAME"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookPrice"</span> <span class="attr">column</span>=<span class="string">"BOOKPRICE"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这就是配置文件的内容模板了，可以有多个<class></class>，多个表多个类的映射。<br>还需要将此文件在hibernate.cfg.xml文件中注册，使得系统能正确识别文件：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">hibernate-configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">session-factory</span>&gt;</span></span><br><span class="line">	...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">	<span class="tag">&lt;<span class="name">mapping</span> <span class="attr">resource</span>=<span class="string">"po/Book.hbn.xml"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">session-factory</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>JavaEE</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>利用Hibernate进行简单数据库操作</title>
+    <url>/posts/246b5d28.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<!-- # 利用Hibernate进行数据库操作 -->
+<p><strong>Session代表与数据库之间的一次操作，获取Session之后就可以使用Session对数据库进行操作，工作完成后需要关闭：</strong><br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">session.close()</span><br></pre></td></tr></table></figure></p>
+<h1 id="Session获取方式一："><a href="#Session获取方式一：" class="headerlink" title="Session获取方式一："></a>Session获取方式一：</h1><ul>
+<li>读取Hibernate配置文件，使用org.hibernate.cfg.configuration类读取配置文件。 使用方法： <strong>configure()</strong>，读取默认的hibernate.cfg.xml文件</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Configuration conf = <span class="keyword">new</span> Configuration().configure();</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Hibernate中，数据库操作是用 <strong>org.hibernate.Session</strong> 完成的， <strong>Session</strong> 由 <strong>org.hibernate.SessionFactory</strong> 管理，生成 <strong>SessionFactory</strong> 代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SessionFactory sf = conf.buildSessionFactory();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用 <strong>SessionFactory</strong> 打开Session：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session session = sf.openSession();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Session获取方式二："><a href="#Session获取方式二：" class="headerlink" title="Session获取方式二："></a>Session获取方式二：</h1><p><strong>在Myeclipse中也提供了一个专门负责进行Session生成的类</strong></p>
+<ul>
+<li><p>创建一个<strong>util</strong>包，包下创建一个文件，右键后选择<strong>Other…</strong> 在弹出的页面选择 <strong>Hibernate</strong>—&gt;<strong>Hibernate Session Factory</strong></p>
+</li>
+<li><p>该类有两个静态方法，<strong>getSession</strong>和<strong>closeSession</strong>，用来生成和关闭<strong>Session</strong>，它用到了很多优化的机制，比较高效。</p>
+</li>
+</ul>
+<p>打开Session：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session session = util.HibernateSessionFactory.getSession();</span><br></pre></td></tr></table></figure></p>
+<p>关闭Session：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">util.HibernateSessionFactory.closeSession();</span><br></pre></td></tr></table></figure></p>
+<h1 id="对数据库增删改查"><a href="#对数据库增删改查" class="headerlink" title="对数据库增删改查"></a>对数据库增删改查</h1><p><strong>注意：</strong> Session的事务不是自动提交的，如果需要对数据库进行增、删、改操作，默认情况下需要开启一个事务（org.hibernate.Transaction），如下：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Transaction tran = session.beginTransaction();</span><br><span class="line">...<span class="comment">//数据库改动</span></span><br><span class="line">tran.commit();</span><br></pre></td></tr></table></figure></p>
+<h2 id="添加操作"><a href="#添加操作" class="headerlink" title="添加操作"></a>添加操作</h2><ul>
+<li><p>利用Session将数据保存到数据库中：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session.save(Object);<span class="comment">//如果存在主键冲突则抛出异常</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保存或者覆盖：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session.saveOrUpdate(Object);<span class="comment">//如果主键存在则修改记录，否则保存</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="查询操作"><a href="#查询操作" class="headerlink" title="查询操作"></a>查询操作</h2><p><strong>最简单的查询：</strong> 根据主键查询一条记录</p>
+<blockquote>
+<p>Object Session.get(PO对应的类，主键)<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Book book = (Book)session.get(Book.class,<span class="string">"001"</span>);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>不存在则返回<strong>null</strong></p>
+<h2 id="修改操作"><a href="#修改操作" class="headerlink" title="修改操作"></a>修改操作</h2><p>利用Session将修改后的数据写入数据库：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Sesson.update(Object);</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">Session.saveOrUpdate(Object);</span><br></pre></td></tr></table></figure></p>
+<p>如果主键存在则修改记录，否则保存</p>
+<h2 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h2><p>利用Session删除记录： </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session.delete(Object);</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>JavaEE</category>
+      </categories>
+      <tags>
+        <tag>Hibernate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Struts框架</title>
+    <url>/posts/e61e5360.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 .
+top:false 是否置顶-->
+<h1 id="Struts框架"><a href="#Struts框架" class="headerlink" title="Struts框架"></a>Struts框架</h1><p><strong>为了规范MVC开发而发布的一个框架，类似的还有WebWork，SpringMVC等</strong></p>
+<hr>
+<h1 id="常用的组件有："><a href="#常用的组件有：" class="headerlink" title="常用的组件有："></a>常用的组件有：</h1><ul>
+<li>JSP</li>
+<li>ActionServlet</li>
+<li>ActionForm</li>
+<li>Action</li>
+<li>JavaBean</li>
+<li>配置文件</li>
+</ul>
+<h1 id="Struts工作规则"><a href="#Struts工作规则" class="headerlink" title="Struts工作规则:"></a>Struts工作规则:</h1><pre><code>1.用户输入，JSP表单提交给ActionServlet
+2.ActionServlet将表单封装到ActionForm内，转交给Action
+3.ActionServlet并不直接处理业务逻辑，而是让Action来调用JavaBean（DAO）
+4.Action返回要跳转的JSP页面地址给ActionServlet 
+5.ActionServlet进行跳转，结果在JSP上显示
+</code></pre><h2 id="ActionServlet"><a href="#ActionServlet" class="headerlink" title="ActionServlet"></a>ActionServlet</h2><p>ActionServlet无需自己实现，在web.xml文件内的配置（Myeclipse）中可自动生成<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.apache.struts.action.ActionServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>config<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>/WEB-INF/struts-config.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>debug<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>detail<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>0<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="ActionForm"><a href="#ActionForm" class="headerlink" title="ActionForm"></a>ActionForm</h2><ul>
+<li><strong>ActionForm必须继承org.apache.struts.action.ActionForm</strong></li>
+<li><strong>必须在struts-config.xml中进行注册:</strong><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form-beans</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">form-bean</span> </span></span><br><span class="line"><span class="tag">                <span class="attr">name</span>=<span class="string">"loginForm"</span>  </span></span><br><span class="line"><span class="tag">                <span class="attr">type</span>=<span class="string">"LoginAction.LoginForm"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">form-bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form-beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><ul>
+<li><strong>Action必须继承org.apache.struts.action.Action</strong></li>
+<li><strong>必须重写execute方法，该方法处理业务逻辑，ActionServlet会自动调用该方法，返回要跳转的JSP页面地址。在底层通过反射机制进行</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ActionForward <span class="title">execute</span><span class="params">(ActionMapping mapping, LoginForm form, HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>必须在struts-config.xml中进行注册:</strong><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">action-mappings</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">path</span>=<span class="string">"/login"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">name</span>=<span class="string">"loginForm"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">"com.yourcompany.struts.action.LoginAction"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">action-mappings</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaEE</category>
+      </categories>
+      <tags>
+        <tag>struts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MVC模式</title>
+    <url>/posts/c0bd5abd.html</url>
+    <content><![CDATA[<!-- title:文章标题
+date:创建时间
+tags:标签 
+ - Java
+ - 编程
+categories:分类
+copyright:版权
+comments: true    是否可评论 -->
+<h1 id="MVC设计模式（设计思想）"><a href="#MVC设计模式（设计思想）" class="headerlink" title="MVC设计模式（设计思想）"></a>MVC设计模式（设计思想）</h1><h2 id="软件开发过程中比较流行的设计思想"><a href="#软件开发过程中比较流行的设计思想" class="headerlink" title="软件开发过程中比较流行的设计思想"></a><em>软件开发过程中比较流行的设计思想</em></h2><p><strong>M</strong>（Model模型）:封装应用程序的数据结构和事物逻辑，为视图服务</p>
+<ul>
+<li>JavaBean（DAO）</li>
+</ul>
+<p><strong>V</strong>（View视图）:模型的外在表现，模型状态改变时，有所体现</p>
+<ul>
+<li>JSP</li>
+</ul>
+<p><strong>C</strong>（Controller控制器）:对用户的输入进行响应，将模型和视图联系到一起，负责将数据写到模型中，并调用视图</p>
+<ul>
+<li>Servlet</li>
+</ul>
+<p>&nbsp;&nbsp;将程序分成了不同的三个模块，显示，业务逻辑，过程控制都各自独立，软件可伸缩性和可维护性都有了很大的优势。</p>
+<p><strong>步骤如下：</strong></p>
+<pre><code>1.Servlet（Controller）接收参数，封装到JavaBean（Model）
+2.调用Javabean（Model）的方法查询数据库，结果暂存在JavaBean（Model）
+3.Servlet（Controller）跳转到JSP（View），就是JSP（View）使用JavaBean（model），得到结果并且显示
+</code></pre>]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>MVC</tag>
+        <tag>JavaEE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>蓝桥2013真题C++B组（三）</title>
+    <url>/posts/c73a0382.html</url>
+    <content><![CDATA[<h1 id="第39级台阶"><a href="#第39级台阶" class="headerlink" title="第39级台阶"></a>第39级台阶</h1><p>&emsp;&emsp;小明刚刚看完电影《第39级台阶》，离开电影院的时候，他数了数礼堂前的台阶数，恰好是39级!<br><br>    站在台阶前，他突然又想着一个问题：<br><br>&emsp;&emsp;如果我每一步只能迈上1个或2个台阶。先迈左脚，然后左右交替，最后一步是迈右脚，也就是说一共要走偶数步。那么，上完39级台阶，有多少种不同的上法呢？<br></p>
+<p><strong>很明显是类似斐波那契数的东西<code>f(n){return f(n-1)+f(n-2);}</code>，可以用递归来做，模拟迈步子，当把所有台阶都上完时（每一步都可以迈一个台阶或者两个台阶），再判断是否是偶数步数即可，以下为代码部分：</strong><br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="comment">/*****************************</span></span><br><span class="line"><span class="comment"> * My Blog: CodeSong.work    *</span></span><br><span class="line"><span class="comment"> *****************************</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> step)</span></span>&#123;<span class="comment">//n为剩余台阶数，step为已走步数</span></span><br><span class="line">    <span class="keyword">if</span>(n&lt;<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>&amp;&amp;step%<span class="number">2</span>==<span class="number">0</span>)</span><br><span class="line">        ans++;</span><br><span class="line">    f(n<span class="number">-1</span>,step+<span class="number">1</span>);</span><br><span class="line">    f(n<span class="number">-2</span>,step+<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    f(<span class="number">39</span>,<span class="number">0</span>);<span class="comment">//初始总共有39级台阶，已走的步数为零</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <categories>
+        <category>蓝桥杯真题</category>
+      </categories>
+      <tags>
+        <tag>蓝桥杯</tag>
+        <tag>算法</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>蓝桥2013真题C++B组（二）</title>
+    <url>/posts/8a24a0d0.html</url>
+    <content><![CDATA[<h1 id="马虎的算式"><a href="#马虎的算式" class="headerlink" title="马虎的算式"></a>马虎的算式</h1><p>小明是个急性子，上小学的时候经常把老师写在黑板上的题目抄错了。<br>有一次，老师出的题目是：36 x 495 = ?<br>他却给抄成了：396 x 45 = ?<br>但结果却很戏剧性，他的答案竟然是对的！！<br>因为 36 * 495 = 396 * 45 = 17820<br>类似这样的巧合情况可能还有很多，比如：27 * 594 = 297 * 5<br>假设 a b c d e 代表1~9不同的5个数字（注意是各不相同的数字，且不含0）<br>能满足形如： ab * cde = adb * ce 这样的算式一共有多少种呢？<br>请你利用计算机的优势寻找所有的可能，并回答不同算式的种类数。<br>满足乘法交换律的算式计为不同的种类，所以答案肯定是个偶数。<br>答案直接通过浏览器提交。<br>注意：只提交一个表示最终统计种类数的数字，不要提交解答过程或其它多余的内容。<br>能满足形如：ab * cde = adb * ce这样的算式一共有多少种？</p>
+<hr>
+<p>既然左右替换算是一种，直接枚举出所有数的组合，然后判断计算结果是否相等即可，非常简单，以下为代码部分：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="comment">/*****************************</span></span><br><span class="line"><span class="comment"> * My Blog: CodeSong.work    *</span></span><br><span class="line"><span class="comment"> *****************************</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;<span class="comment">//记录答案</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> a=<span class="number">1</span>;a&lt;<span class="number">10</span>;++a)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> b = <span class="number">1</span>; b &lt; <span class="number">10</span>; b++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(b==a)    <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">1</span>; c &lt; <span class="number">10</span>; c++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(c==a||c==b)    <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">1</span>; d &lt; <span class="number">10</span>; d++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span>(d==a||d==b||d==c)    <span class="keyword">continue</span>;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> e = <span class="number">1</span>; e &lt; <span class="number">10</span>; e++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span>(e==a||e==b||e==c||e==d)    <span class="keyword">continue</span>;</span><br><span class="line">                        <span class="comment">//ab * cde = adb * ce </span></span><br><span class="line">                        <span class="keyword">int</span> t1 = (a*<span class="number">10</span> + b)*(c*<span class="number">100</span>+d*<span class="number">10</span>+e);</span><br><span class="line">                        <span class="keyword">int</span> t2 = (a*<span class="number">100</span>+d*<span class="number">10</span>+b)*(c*<span class="number">10</span>+e);</span><br><span class="line">                        <span class="keyword">if</span>(t1==t2)</span><br><span class="line">                            ans++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>蓝桥杯真题</category>
+      </categories>
+      <tags>
+        <tag>蓝桥杯</tag>
+        <tag>算法</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>蓝桥2013真题C++B组（一）</title>
+    <url>/posts/ba324c08.html</url>
+    <content><![CDATA[<h1 id="高斯日记"><a href="#高斯日记" class="headerlink" title="高斯日记"></a>高斯日记</h1><p>&emsp;&emsp;大数学家高斯有个好习惯：无论如何都要记日记。他的日记有个与众不同的地方，他从不注明年月日，而是用一个整数代替，<br>比如：4210。后来人们知道，那个整数就是日期，它表示那一天是高斯出生后的第几天。<br><br>&emsp;&emsp;这或许也是个好习惯，它时时刻刻提醒着主人：日子又过去一天，还有多少时光可以用于浪费呢？<br><br>&emsp;&emsp;高斯出生于：1777年4月30日。在高斯发现的一个重要定理的日记上标注着：5343，因此可算出那天是：1791年12月15日。<br><br>&emsp;&emsp;高斯获得博士学位的那天日记上标着：8113。请你算出高斯获得博士学位的年月日。<br><br>提交答案的格式是: <strong>yyyy-mm-dd</strong>, 例如: 1980-03-21</p>
+<hr>
+<p>这道题非常简单，由于只提交一个日期，那直接利用程序从出生那天开始跑一遍要求的次数就能够得到答案了。有两点：<br><br><strong>一、需要检查高斯出生的当天算不算是一天，可以拿题目中的例子来测试你的算法（这一步必须检查不然错了冤死了）</strong><br><br><strong>二、由于日期有一些规定，所以需要特别处理：闰年，平年，大月，小月，月末，年末；</strong><br></p>
+<blockquote>
+<p><em>关于闰年，定制闰年规则不是随意设置的。<br>
+</em>首先我们要知道，年的概念，是地球围绕太阳一周的时间（所谓公转周期）称为一年，这个周期是相当稳定的，很长时间也不会变动1秒，但是很遗憾zhidao的是这个周期并不能被一天的时间整除，真正的一年其实是365.2423天（目前）。<em><br>
+</em>所以，如果每年定义为365天的话，1年就会多出0.2423天，4年就会多出0.9692天，非常接近1天，这样闰年就出现了，也就是每4年要有1年设置为366天，来抵消这多出的1天。规则为：<em><br><br>(1)<strong>如果年份能被4整除，则该年计为闰年</strong><br>
+</em>可是，假如不做调整的话，当400年的时候，累计才多出96.92天，闰年的设置却多出来100天，所权以要在400年内，再撤销3个闰年。怎么撤销呢？就有了下面这个规则：<em><br>(2)<strong>如果年份能被100整除，则不计为闰年</strong><br>
+</em>问题又来了，400年里有4个，又少了一个，所以再加一个规则就是：<em><br><br>(3)<strong>如果年份能被400整除，则计为闰年</strong><br>
+</em>这样每400年里设置了97个闰年，误差被调整到400年仅有0.08天，而设置规则也并不是很麻烦，所以一直沿用了下来。*</p>
+</blockquote>
+<p>特别注意本题难点仅在逻辑判断,以下为代码部分：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="comment">/*****************************</span></span><br><span class="line"><span class="comment"> * My Blog: CodeSong.work    *</span></span><br><span class="line"><span class="comment"> *****************************</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isLeapYear</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="comment">//返回是否是闰年的判断</span></span><br><span class="line">    <span class="keyword">return</span> ((n % <span class="number">4</span> == <span class="number">0</span> &amp;&amp; n % <span class="number">100</span> != <span class="number">0</span>) || n % <span class="number">400</span> == <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> year = <span class="number">1777</span>;<span class="comment">//年</span></span><br><span class="line">    <span class="keyword">int</span> month = <span class="number">4</span>;<span class="comment">//月</span></span><br><span class="line">    <span class="keyword">int</span> day = <span class="number">30</span>;<span class="comment">//日</span></span><br><span class="line">    <span class="keyword">int</span> dSum = <span class="number">8113</span>;<span class="comment">//天数</span></span><br><span class="line">    <span class="comment">//月份的逻辑判断为容易出错的地方,还有日期的改变</span></span><br><span class="line">    <span class="keyword">while</span> (--dSum)</span><br><span class="line">    &#123;<span class="comment">//先判断是否为月底</span></span><br><span class="line">        <span class="keyword">if</span> (month == <span class="number">12</span> &amp;&amp; day == <span class="number">31</span>)</span><br><span class="line">        &#123; <span class="comment">//判断是否是一年中最后的一天，year加1，month和day重置为1</span></span><br><span class="line">            year += <span class="number">1</span>;</span><br><span class="line">            month = <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((month == <span class="number">1</span> || month == <span class="number">3</span> || month == <span class="number">5</span> || month == <span class="number">7</span> || month == <span class="number">8</span> || month == <span class="number">10</span>) &amp;&amp; day == <span class="number">31</span>)</span><br><span class="line">        &#123; <span class="comment">//判断是否是大月中的最后一天</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((month == <span class="number">4</span> || month == <span class="number">6</span> || month == <span class="number">9</span> || month == <span class="number">11</span>) &amp;&amp; day == <span class="number">30</span>)</span><br><span class="line">        &#123; <span class="comment">//判断是否是小月中的最后一天</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (month == <span class="number">2</span> &amp;&amp; isLeapYear(year) &amp;&amp; day == <span class="number">29</span>)</span><br><span class="line">        &#123; <span class="comment">//单独处理闰年的月底</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (month == <span class="number">2</span> &amp;&amp; !isLeapYear(year) &amp;&amp; day==<span class="number">28</span>)</span><br><span class="line">        &#123; <span class="comment">//单独处理平年的月底</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        day++;<span class="comment">//非月底则day直接增加一</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d-%d-%d\n"</span>, year, month, day);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <categories>
+        <category>蓝桥杯真题</category>
+      </categories>
+      <tags>
+        <tag>蓝桥杯</tag>
+        <tag>算法</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java中内存的划分-学习笔记</title>
+    <url>/posts/3a8013f5.html</url>
+    <content><![CDATA[<hr>
+<blockquote>
+<p>任何计算机程序，如果想要运行，都需要开辟一块内存空间。</p>
+</blockquote>
+<hr>
+<p>&emsp;&emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。</p>
+<h1 id="虚拟机栈（VM-Stack）"><a href="#虚拟机栈（VM-Stack）" class="headerlink" title="虚拟机栈（VM Stack）"></a>虚拟机栈（VM Stack）</h1><p>&emsp;&emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈帧来存储局部变量表，栈帧还存有：操作数栈，动态链接，方法出口等信息。</p>
+<h1 id="堆（Heap）"><a href="#堆（Heap）" class="headerlink" title="堆（Heap）"></a>堆（Heap）</h1><p>&emsp;&emsp;堆是Java对象在内存中的存储区域，凡是用new出来的东西都在这里面。Java中的对象和数组都被分配在堆中。</p>
+<p>堆内存里面的数据，都有默认值。规则：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">默认值 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">整型</td>
+<td style="text-align:center">0 </td>
+</tr>
+<tr>
+<td style="text-align:center">浮点型</td>
+<td style="text-align:center">0.0</td>
+</tr>
+<tr>
+<td style="text-align:center">字符型</td>
+<td style="text-align:center">‘\u0000’</td>
+</tr>
+<tr>
+<td style="text-align:center">布尔型</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:center">引用类型</td>
+<td style="text-align:center">null</td>
+</tr>
+</tbody>
+</table>
+<h1 id="方法区-Method-Area"><a href="#方法区-Method-Area" class="headerlink" title="方法区(Method Area)"></a>方法区(Method Area)</h1><p>  它用于存储已被虚拟机加载的类信息，常量，静态变量，方法的信息，即时编译器编译后的代码等数据。</p>
+<p><strong>注意：仅仅是包含了类的相关信息</strong></p>
+<h1 id="本地方法栈（Native-Method-Stack）"><a href="#本地方法栈（Native-Method-Stack）" class="headerlink" title="本地方法栈（Native Method Stack）"></a>本地方法栈（Native Method Stack）</h1><p>  与虚拟机栈发挥的作用相似，相比于虚拟机栈为Java方法服务，本地方法栈为虚拟机使用的本地方法服务，执行每个本地方法的时候，都会创建一个栈帧用于存储局部变量表，操作数栈，动态链接，方法出口等信息。</p>
+<p>  很多的算法或者一个功能的实现，都被java封装到了本地方法中，程序直接通过调用本地的方法就行了，本地方法栈就是用来存放这种方法的，实现该功能的代码可能是C也可能是C++,反正不一定就是java实现的。</p>
+<h1 id="Program-Count-Register（PC寄存器，程序计数器）"><a href="#Program-Count-Register（PC寄存器，程序计数器）" class="headerlink" title="Program Count Register（PC寄存器，程序计数器）"></a>Program Count Register（PC寄存器，程序计数器）</h1><p>  指示Java虚拟机下一条需要执行的字节码指令。</p>
+<p>  程序计数器是一块较小的内存区域，作用可以看做是当前线程执行的字节码的位置指示器。分支、循环、跳转、异常处理和线程恢复等基础功能都需要依赖这个计算器来完成。</p>
+<hr>
+<h2 id="以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。-所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。"><a href="#以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。-所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。" class="headerlink" title="  以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。"></a>  以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。</h2>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -156,618 +766,6 @@ margin: auto;"></p>
       </categories>
       <tags>
         <tag>复习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java中new一个对象的创建过程</title>
-    <url>/posts/def49b5c.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<h1 id="new一个Java对象"><a href="#new一个Java对象" class="headerlink" title="new一个Java对象"></a>new一个Java对象</h1><p>在Java程序的运行过程中每时每刻都有对象在生生死死，这篇文章将会简单讨论对象的创建过程（指普通的Java对象，不包括数组和Class等对象）</p>
-<h2 id="当虚拟机遇到一条new指令时"><a href="#当虚拟机遇到一条new指令时" class="headerlink" title="当虚拟机遇到一条new指令时"></a>当虚拟机遇到一条<strong>new</strong>指令时</h2><ol>
-<li>首先会查看对象对应的类是否被加载到内存中，如果没有则需要进行相应的类加载过程（加载、解析、初始化等）。</li>
-<li><p>在类的加载检查通过之后，虚拟机将会为新生对象分配内存（从堆中划分一块对象所需的内存）根据使用的垃圾收集器不同，使用不同的分配机制：</p>
-<ul>
-<li><strong>指针碰撞</strong>：当虚拟机使用复制算法或标记整理算法实现的垃圾收集器时，内存区域是规整的，已经被使用的内存放在一边，空闲的在另一边，中间使用一个指针作为分界点的指示器（用来标识两者的分界）。分配内存时，就是将指针向空闲的内存那一边移动一段相应对象需要的内存大小距离。（移动一个对象大小）</li>
-<li><strong>空闲列表</strong>：当虚拟机使用标记清除算法实现的垃圾收集器时，内存区域并不是规整的。可能是已使用的和未被使用的空间相互交错，所以虚拟机需要维护一个列表，上面记录了那些内存是可用的，从中划分一个足够大的内存分配给对象实例，并且更新列表上的记录。</li>
-</ul>
-</li>
-<li><p>实例对象的内存空间分配完成后，虚拟机有可能会对内存空间进行初始化，初始化为<strong>零值</strong>（不包括对象头）。由策略的不同，这一工作有可能在内存分配之前就已经完成。</p>
-</li>
-<li>接下来就是设置对象头信息，比如：所属类、类的元数据，对象的哈希码，GC分代年龄等。</li>
-</ol>
-<h2 id="执行new指令之后"><a href="#执行new指令之后" class="headerlink" title="执行new指令之后"></a>执行new指令之后</h2><p> 调用对象的<strong>实例构造器</strong>（init方法），对实例的属性进行设置，按照程序员的意愿进行初始化，这样一个真正可用的对象就诞生啦！</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>内存</tag>
-        <tag>JVM</tag>
-        <tag>虚拟机</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MYSQL的MVCC原理</title>
-    <url>/posts/e6aff96f.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<p>MYSQL的MVCC原理 <a href="https://blog.csdn.net/SnailMann/article/details/94724197?utm_medium=distribute.pc_feed_404.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase&amp;depth_1-utm_source=distribute.pc_feed_404.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecas" target="_blank" rel="noopener">CSDN的文章</a></p>
-<p>数据库脏读、事务的四大特性、四大隔离级别、三大范式<a href="https://blog.csdn.net/qq_34569497/article/details/79064208" target="_blank" rel="noopener">CSDN的文章</a></p>
-]]></content>
-      <categories>
-        <category>引用外链文章</category>
-      </categories>
-      <tags>
-        <tag>MYSQL</tag>
-        <tag>数据库</tag>
-        <tag>MVCC</tag>
-        <tag>脏读</tag>
-        <tag>事务</tag>
-        <tag>范式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MYSQL连环13问</title>
-    <url>/posts/7d35c1a.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<p>MYSQL连环13问 <a href="https://mp.weixin.qq.com/s?__biz=MzA4ODIwMDUyNw==&amp;mid=2653000172&amp;idx=1&amp;sn=5ad02a54d6060566c31b04b7ae1e6b24&amp;chksm=8bf8f5ccbc8f7cda33ea881be98c52f742a856206706662581791a6195198f81b3b765814424&amp;mpshare=1&amp;scene=23&amp;srcid=09257ocMCECXUrn4s6v9Cn5a&amp;sharer_sharetime=1601009217041&amp;sharer_shareid=2a1f9bf9c46d0a9a3066b3ca9ec57609#rd" target="_blank" rel="noopener">蓝桥的文章</a></p>
-]]></content>
-      <categories>
-        <category>引用外链文章</category>
-      </categories>
-      <tags>
-        <tag>MYSQL</tag>
-        <tag>数据库</tag>
-        <tag>索引</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hibernate框架</title>
-    <url>/posts/d85fbc26.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<h1 id="Hibernate框架"><a href="#Hibernate框架" class="headerlink" title="Hibernate框架"></a>Hibernate框架</h1><p><em>Hibernate是Java中对象和关系的映射的解决方案，将数据库中的一条记录看成一个Java对象，大大方便了编程，提高了可维护性</em></p>
-<ul>
-<li>ORMapping（对象关系映射）<br>  是软件开发过程中数据库层比较流行的设计思想。<strong>Hibernate就是为了规范ORMapping开发而发布的一个框架。</strong> 类似的还有iBATIS、EntityBean等。</li>
-</ul>
-<p>&emsp;&emsp;在某些大型应用场合，对数据库中的记录进行操作，Inset，Delete，Update，Select等。为了符合MVC模式，可以在DAO里面实现，但也由此引出一个问题，DAO开发人员必须懂得数据库的复杂操作，如果数据库改变时DAO的代码必须改变，如： <strong>当数据库的表有所改动时，DAO里的代码也要改动，这样带来了很大不便。</strong> 很多时候SQL语句的结构基本不变，变化的只是表名，列名等。所以Hibernate将表名和列名进行封装，使DAO的开发人员看起来像是对对象进行操作。</p>
-<p>&emsp;&emsp;在JavaBean中封装了数据库中的持久化信息，因此称为 <strong>PO（Persistence Object）</strong> 。在ORMapping中，一个PO对象一般表示数据表中的一条记录，只是对这个记录的操作可以简化成对这个Bean对象的操作，操作之后数据库中的记录相应变化，Hibernate框架中提供了一些能够对这些对象进行操作的函数。</p>
-<hr>
-<h2 id="常用组件："><a href="#常用组件：" class="headerlink" title="常用组件："></a>常用组件：</h2><pre><code>* PO（Persistence Object）
-* 框架API
-* Hibernate配置文件
-* Hibernate映射文件等
-</code></pre><h2 id="Hibernate框架的工作规则："><a href="#Hibernate框架的工作规则：" class="headerlink" title="Hibernate框架的工作规则："></a>Hibernate框架的工作规则：</h2><p>对一个数据库进行操作，执行步骤如下：</p>
-<pre><code>1.框架API通过读取Hibernate配置文件，连接数据库
-2.当对PO进行操作时，框架API通过Hibernate映射文件，来决定决定操作的表明和列名
-3.框架API执行SQL语句
-</code></pre><p>所以需要提前完成以下几个步骤：</p>
-<pre><code>1.编写Hibernate配置文件，里面有连接到数据库需要的信息
-2.编写对应记录的类（PO）
-3.编写Hibernate映射文件，将PO和表映射，PO中的属性和表中的列映射
-4.编写DAO，使用Hibernate进行数据库操作
-</code></pre><h1 id="Hibernate配置文件"><a href="#Hibernate配置文件" class="headerlink" title="Hibernate配置文件"></a>Hibernate配置文件</h1><p><em>hibernate.cfg.xml默认在src目录下，该文件主要是为了连接到数据库</em><br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-configuration PUBLIC</span></span><br><span class="line"><span class="meta">          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"</span></span><br><span class="line"><span class="meta">          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Generated by MyEclipse Hibernate Tools.                   --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">session-factory</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.username"</span>&gt;</span>root<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.url"</span>&gt;</span></span><br><span class="line">		jdbc:mysql://localhost:3306/javabean</span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dialect"</span>&gt;</span></span><br><span class="line">		org.hibernate.dialect.MySQLDialect<span class="comment">&lt;!--连接的是MySQL数据库 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.password"</span>&gt;</span>root<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connection.driver_class"</span>&gt;</span></span><br><span class="line">		com.mysql.jdbc.Driver <span class="comment">&lt;!--MySQL数据库连接驱动版本5 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">session-factory</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="编写PO"><a href="#编写PO" class="headerlink" title="编写PO"></a>编写PO</h1><ul>
-<li>根据JavaBean规范编写即可</li>
-<li>编写后这个类目前是无法被系统识别的，因为不清楚和数据库表的关系。因此需要编写一个 <strong>配置文件</strong> <h1 id="PO配置文件"><a href="#PO配置文件" class="headerlink" title="PO配置文件"></a>PO配置文件</h1><blockquote>
-<p>一般和PO放在同一个包下，通常命名为 <strong>po名+“.hbm.xml”</strong> ,例如 <strong>Book.hbm.xml</strong> </p>
-</blockquote>
-</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" </span></span><br><span class="line"><span class="meta">"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"po.Book"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"bookId"</span> <span class="attr">column</span>=<span class="string">"BOOKID"</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"assigned"</span> /&gt;</span><span class="comment">&lt;!--主键的生成策略，assigned表示由用户赋值--&gt;</span></span><br><span class="line">  	<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookName"</span> <span class="attr">column</span>=<span class="string">"BOOKNAME"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookPrice"</span> <span class="attr">column</span>=<span class="string">"BOOKPRICE"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这就是配置文件的内容模板了，可以有多个<class></class>，多个表多个类的映射。<br>还需要将此文件在hibernate.cfg.xml文件中注册，使得系统能正确识别文件：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">hibernate-configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">session-factory</span>&gt;</span></span><br><span class="line">	...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">	<span class="tag">&lt;<span class="name">mapping</span> <span class="attr">resource</span>=<span class="string">"po/Book.hbn.xml"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">session-factory</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>JavaEE</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hibernate的动态实体模型</title>
-    <url>/posts/a72cd1a3.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<p>在Hibernate中对数据库进行操作，有一种方法可以不用定义JavaBean(PO)。就是利用 <strong>动态实体模型</strong> </p>
-<p>Session对对象进行操作的<strong>函数</strong>有两个版本，分别是对JavaBean操作和对动态实体模型进行操作</p>
-<h1 id="映射文件修改"><a href="#映射文件修改" class="headerlink" title="映射文件修改"></a><strong>映射文件修改</strong></h1><p>在动态实体模型中，由于不存在PO，映射文件需要进行相应的修改，例：<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"po.Book"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>改为：</strong></p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">class</span> <span class="attr">entity-name</span>=<span class="string">"Book_entity"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>并在各个属性的映射命令内指定数据类型，修改后内容如下：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" </span></span><br><span class="line"><span class="meta">"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">class</span>  <span class="attr">entity-name</span>=<span class="string">"Book_entity"</span> <span class="attr">table</span>=<span class="string">"T_BOOK"</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"bookId"</span> <span class="attr">column</span>=<span class="string">"BOOKID"</span> <span class="attr">type</span>=<span class="string">"java.lang.Integer"</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"assigned"</span> /&gt;</span><span class="comment">&lt;!--主键的生成策略，assigned表示由用户赋值--&gt;</span></span><br><span class="line">  	<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookName"</span> <span class="attr">column</span>=<span class="string">"BOOKNAME"</span> <span class="attr">type</span>=<span class="string">"java.lang.String"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"bookPrice"</span> <span class="attr">column</span>=<span class="string">"BOOKPRICE"</span> <span class="attr">type</span>=<span class="string">"java.lang.Double"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>对动态实体模型操作的函数内内传入的第一个参数为<strong>Book_entity（entity-name）</strong> 是动态实体模型的实体名，第二个为主键值。并且，在Hibernate中，动态实体用HashMap来表达：<strong>key表示动态实体内的属性名称，value表示值</strong> </li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">HashMap hm = (HashMap)session.get(<span class="string">"Book_entity"</span>,<span class="number">1</span>);</span><br><span class="line">hm.get(<span class="string">"bookName"</span>);<span class="comment">//将返回查询到的实体的bookName属性值，通过key来访问value</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>JavaEE</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
-        <tag>动态实体模型</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mybatis的mapper.xml（映射）传入参数方式</title>
-    <url>/posts/b705a9cd.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<p>Mybatis的mapper.xml（映射）传入参数方式 <a href="https://blog.csdn.net/qq_35423108/article/details/76255202" target="_blank" rel="noopener">CSDN的文章</a></p>
-]]></content>
-      <categories>
-        <category>引用外链文章</category>
-      </categories>
-      <tags>
-        <tag>Mybatis</tag>
-        <tag>映射</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Struts2与Struts1的区别</title>
-    <url>/posts/422fe07c.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<h1 id="Struts-2框架"><a href="#Struts-2框架" class="headerlink" title="Struts 2框架"></a><strong>Struts 2</strong>框架</h1><p><em>Struts2并没有继承Struts1的特点，反而和WebWork非常类似。因为Struts2是在WebWork的基础上发展出来的，它在各种功能和性能方面都有很好的保证，吸收了Struts1和WebWork的优势，所以它也是一个非常优秀的框架</em></p>
-<h2 id="Struts-2-和Struts-1的不同点："><a href="#Struts-2-和Struts-1的不同点：" class="headerlink" title="Struts 2 和Struts 1的不同点："></a><strong>Struts 2</strong> 和<strong>Struts 1</strong>的不同点：</h2><h3 id="Action类的编写"><a href="#Action类的编写" class="headerlink" title="Action类的编写"></a><strong>Action</strong>类的编写</h3><ul>
-<li><p><strong>Struts 1</strong>中，Action一般继承基类<strong>org.apache.struts.action.Action</strong></p>
-</li>
-<li><p><strong>Struts 2</strong> 中，Action类可以实现一个Action接口，也可以实现其他接口，也可以继承ActionSupport基类，<strong>甚至不用实现任何接口，只编写execute函数即可！</strong></p>
-<h3 id="Action的运行模式"><a href="#Action的运行模式" class="headerlink" title="Action的运行模式"></a><strong>Action</strong>的运行模式</h3></li>
-<li><p><strong>Struts 1</strong> 中，Action是单态的，系统实例化一个对象来处理多个请求，为每个请求分配一个线程，在该线程中运行execute函数。因此在开发中需要特别小心，Action资源必须是线程安全的或同步的。</p>
-</li>
-<li><p><strong>Struts 2</strong>中，Action为每个请求产生一个实例，不会产生线程安全问题，并且系统能及时回收资源垃圾，不会有废弃空间的问题。</p>
-<h3 id="对Wbe容器的依赖"><a href="#对Wbe容器的依赖" class="headerlink" title="对Wbe容器的依赖"></a>对Wbe容器的依赖</h3></li>
-<li>Struts 1 中，Action的execute函数，传入了<strong>Servlet API：HttpServletRequest</strong> 和 <strong>HttpServletresponse</strong>，使得测试必须依赖于Web容器。</li>
-<li><strong>Struts 2</strong> 中，可以不传入这两个参数，可以通过其它方式访问它们。因此，Action不依赖于容器，允许Action脱离容器单独被测试<h3 id="对表单数据的封装"><a href="#对表单数据的封装" class="headerlink" title="对表单数据的封装"></a>对表单数据的封装</h3></li>
-<li><strong>Struts 1</strong> 中，使用ActionForm来封装表单数据，所有的ActionForm必须继承<strong>org.apache.struts.action.ActionForm</strong>，有可能造成ActionForm类和VO类重复编码。</li>
-<li><strong>Struts 2</strong> 中，直接在Action中编写表单数据相对应的属性，可以不用编写ActionForm，并且这些属性可以通过Web页面上的标签访问。</li>
-</ul>
-<h2 id="Struts-2-工作规则"><a href="#Struts-2-工作规则" class="headerlink" title="Struts 2 工作规则"></a><strong>Struts 2</strong> 工作规则</h2><h3 id="常用的组件"><a href="#常用的组件" class="headerlink" title="常用的组件"></a>常用的组件</h3><ul>
-<li>FilterDispatcher过滤器</li>
-<li>JSP</li>
-<li>Action</li>
-<li>JavaBean</li>
-<li>配置文件等</li>
-</ul>
-<h3 id="工作规则"><a href="#工作规则" class="headerlink" title="工作规则"></a>工作规则</h3><p>对于一个动作，执行步骤如下：</p>
-<pre><code>1.用户输入，JSP表单的请求被FilterDispatcher截获。
-2.FilterDispatcher将表单信息转交给Action，并封装在Action内。
-3.Action调用JavaBean（DAO）。
-4.Action返回要跳转到的JSP页面逻辑名称给框架。
-5.框架根据逻辑名称找到相应的网页地址，进行跳转，结果在JSP上显示。
-</code></pre><h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><p>Myeclipse导入<strong>Struts 2</strong>之后需要配置WEB-INF/web.xml文件。<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee"</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"</span> <span class="attr">id</span>=<span class="string">"WebApp_ID"</span> <span class="attr">version</span>=<span class="string">"3.1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">display-name</span>&gt;</span>XiTi12<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>struts2<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>struts2<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.action<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>表示使用org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter过滤器来拦截求，并起名为struts2，过滤目标为项目下的所有资源。</p>
-<p><strong>Struts 2</strong> 中的配置文佳一般为struts.xml，放到WEB-INF/classes目录中，编写时放在项目的src根目录下。下面是在struts.xml中配置Action以及相关虚拟页面名称：<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">struts</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"struts2"</span> <span class="attr">extends</span>=<span class="string">"struts-default"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">"query"</span> <span class="attr">class</span>=<span class="string">"prj12.QueryAction"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"success"</span>&gt;</span>/show.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">"fail"</span>&gt;</span>/query.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">struts</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>extends属性表示继承一个默认的配置文件struts-default，一般都继承它。<code>&lt;action&gt;</code>中的那么属性表示Action被提交是的路径，class指定动作类的路径，在jsp中表单要提交的路径：“/prj12/query.action”，这是WebWork风格，“.action”是默认情况下规定的。<code>&lt;result&gt;</code>表示的就是虚拟名称和实际页面的映射。</p>
-]]></content>
-      <categories>
-        <category>JavaEE</category>
-      </categories>
-      <tags>
-        <tag>Struts</tag>
-        <tag>Struts2</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MVC模式</title>
-    <url>/posts/c0bd5abd.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 -->
-<h1 id="MVC设计模式（设计思想）"><a href="#MVC设计模式（设计思想）" class="headerlink" title="MVC设计模式（设计思想）"></a>MVC设计模式（设计思想）</h1><h2 id="软件开发过程中比较流行的设计思想"><a href="#软件开发过程中比较流行的设计思想" class="headerlink" title="软件开发过程中比较流行的设计思想"></a><em>软件开发过程中比较流行的设计思想</em></h2><p><strong>M</strong>（Model模型）:封装应用程序的数据结构和事物逻辑，为视图服务</p>
-<ul>
-<li>JavaBean（DAO）</li>
-</ul>
-<p><strong>V</strong>（View视图）:模型的外在表现，模型状态改变时，有所体现</p>
-<ul>
-<li>JSP</li>
-</ul>
-<p><strong>C</strong>（Controller控制器）:对用户的输入进行响应，将模型和视图联系到一起，负责将数据写到模型中，并调用视图</p>
-<ul>
-<li>Servlet</li>
-</ul>
-<p>&nbsp;&nbsp;将程序分成了不同的三个模块，显示，业务逻辑，过程控制都各自独立，软件可伸缩性和可维护性都有了很大的优势。</p>
-<p><strong>步骤如下：</strong></p>
-<pre><code>1.Servlet（Controller）接收参数，封装到JavaBean（Model）
-2.调用Javabean（Model）的方法查询数据库，结果暂存在JavaBean（Model）
-3.Servlet（Controller）跳转到JSP（View），就是JSP（View）使用JavaBean（model），得到结果并且显示
-</code></pre>]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>MVC</tag>
-        <tag>JavaEE</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Struts2相关</title>
-    <url>/posts/54de75b4.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<h1 id="在Action中访问Web对象"><a href="#在Action中访问Web对象" class="headerlink" title="#在Action中访问Web对象"></a>#在Action中访问Web对象</h1><p>request、response、application、session对象获取：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.struts2.ServletActionContext;</span><br><span class="line"><span class="keyword">import</span> com.opensymphony.xwork2.ActionContext;</span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    <span class="comment">//获取request对象</span></span><br><span class="line">    HttpServletRequest request = ServletActionContext.getRequest();</span><br><span class="line">    <span class="comment">//获取reponse对象</span></span><br><span class="line">    HttpServletResponse response = ServletActionContext.getResponse();</span><br><span class="line">    <span class="comment">//获取application对象</span></span><br><span class="line">    ServletContext application = ServletActionContext.getServletContext();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取Session对象</span></span><br><span class="line">    Map session = ActionContext.getContext().getSession();</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>这里的Session是个Map对象。在Struts2中，底层的Session被封装成了Map类型，可以直接操作这个map进行对session的写入和读取操作，而不是直接去操作HttpSession（）</p>
-]]></content>
-      <categories>
-        <category>JavaEE</category>
-      </categories>
-      <tags>
-        <tag>Struts2</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java中内存的划分-学习笔记</title>
-    <url>/posts/3a8013f5.html</url>
-    <content><![CDATA[<hr>
-<blockquote>
-<p>任何计算机程序，如果想要运行，都需要开辟一块内存空间。</p>
-</blockquote>
-<hr>
-<p>&emsp;&emsp;计算机整体的内存都是由操作系统来进行管理的，所以Java程序运行需要向计算机操作系统申请一块内存。这块专属内存被划分为了五部分，这样一来每一小块内存能被更好的使用和分门别类来管理。</p>
-<h1 id="虚拟机栈（VM-Stack）"><a href="#虚拟机栈（VM-Stack）" class="headerlink" title="虚拟机栈（VM Stack）"></a>虚拟机栈（VM Stack）</h1><p>&emsp;&emsp;栈中执行每个方法的时候，方法中的局部变量都会存在这块内存中。jvm会创建一个栈帧来存储局部变量表，栈帧还存有：操作数栈，动态链接，方法出口等信息。</p>
-<h1 id="堆（Heap）"><a href="#堆（Heap）" class="headerlink" title="堆（Heap）"></a>堆（Heap）</h1><p>&emsp;&emsp;堆是Java对象在内存中的存储区域，凡是用new出来的东西都在这里面。Java中的对象和数组都被分配在堆中。</p>
-<p>堆内存里面的数据，都有默认值。规则：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">数据类型</th>
-<th style="text-align:center">默认值 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">整型</td>
-<td style="text-align:center">0 </td>
-</tr>
-<tr>
-<td style="text-align:center">浮点型</td>
-<td style="text-align:center">0.0</td>
-</tr>
-<tr>
-<td style="text-align:center">字符型</td>
-<td style="text-align:center">‘\u0000’</td>
-</tr>
-<tr>
-<td style="text-align:center">布尔型</td>
-<td style="text-align:center">false</td>
-</tr>
-<tr>
-<td style="text-align:center">引用类型</td>
-<td style="text-align:center">null</td>
-</tr>
-</tbody>
-</table>
-<h1 id="方法区-Method-Area"><a href="#方法区-Method-Area" class="headerlink" title="方法区(Method Area)"></a>方法区(Method Area)</h1><p>  它用于存储已被虚拟机加载的类信息，常量，静态变量，方法的信息，即时编译器编译后的代码等数据。</p>
-<p><strong>注意：仅仅是包含了类的相关信息</strong></p>
-<h1 id="本地方法栈（Native-Method-Stack）"><a href="#本地方法栈（Native-Method-Stack）" class="headerlink" title="本地方法栈（Native Method Stack）"></a>本地方法栈（Native Method Stack）</h1><p>  与虚拟机栈发挥的作用相似，相比于虚拟机栈为Java方法服务，本地方法栈为虚拟机使用的本地方法服务，执行每个本地方法的时候，都会创建一个栈帧用于存储局部变量表，操作数栈，动态链接，方法出口等信息。</p>
-<p>  很多的算法或者一个功能的实现，都被java封装到了本地方法中，程序直接通过调用本地的方法就行了，本地方法栈就是用来存放这种方法的，实现该功能的代码可能是C也可能是C++,反正不一定就是java实现的。</p>
-<h1 id="Program-Count-Register（PC寄存器，程序计数器）"><a href="#Program-Count-Register（PC寄存器，程序计数器）" class="headerlink" title="Program Count Register（PC寄存器，程序计数器）"></a>Program Count Register（PC寄存器，程序计数器）</h1><p>  指示Java虚拟机下一条需要执行的字节码指令。</p>
-<p>  程序计数器是一块较小的内存区域，作用可以看做是当前线程执行的字节码的位置指示器。分支、循环、跳转、异常处理和线程恢复等基础功能都需要依赖这个计算器来完成。</p>
-<hr>
-<h2 id="以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。-所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。"><a href="#以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。-所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。" class="headerlink" title="  以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。"></a>  以上五个区域是Java虚拟机内存划分情况，其中方法区和堆被JVM中多个线程共享，比如类的静态常量就被存放在方法区，供类对象之间共享，虚拟机栈，本地方法栈，pc寄存器是每个线程独立拥有的，不会与其他线程共享。 所以Java在通过new创建一个类对象实例的时候，一方面会在虚拟机栈中创建一个该对象的引用，另一方面会在堆上创建类对象的实例，然后将对象引用指向该对象的实例。对象引用存放在每一个方法对应的栈帧中。</h2>]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>个人博客部署免费的https安全证书</title>
-    <url>/posts/ce68fd7a.html</url>
-    <content><![CDATA[<h1 id="个人博客怎么部署免费的https安全证书？"><a href="#个人博客怎么部署免费的https安全证书？" class="headerlink" title="个人博客怎么部署免费的https安全证书？"></a>个人博客怎么部署免费的https安全证书？</h1><p>&emsp;&emsp;首先需要去阿里云申请一个免费的安全证书 <a href="https://www.aliyun.com/product/cas?source=5176.11533457&amp;userCode=l1qstn8f&amp;type=copy" target="_blank" rel="noopener">我是一个超链接</a></p>
-<p>选择免费的证书：<img src="https://s1.ax1x.com/2020/03/26/G9PJte.png" alt="https1"></p>
-<p>免费购买后，在证书控制台申请证书：<img src="https://s1.ax1x.com/2020/03/26/G9Fms1.png" alt="https2"><br>后面接着提交信息，验证，几分钟就会成功了不再阐述 </p>
-<h1 id="将证书部署到服务器上"><a href="#将证书部署到服务器上" class="headerlink" title="将证书部署到服务器上"></a>将证书部署到服务器上</h1><p><strong>服务器系统：Ubuntu</strong></p>
-<p><strong>Web服务器：Apache2</strong></p>
-<h2 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h2><ul>
-<li>从SSL证书控制台下载相应版本的证书</li>
-<li>服务器已安装Open SLL（反正我的是默认有了的）</li>
-</ul>
-<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="在Apache2目录下创建个目录并且将证书文件复制进去"><a href="#在Apache2目录下创建个目录并且将证书文件复制进去" class="headerlink" title="在Apache2目录下创建个目录并且将证书文件复制进去"></a>在Apache2目录下创建个目录并且将证书文件复制进去</h3><pre><code>mkdir /ect/apache2/ssl
-
-cp *public.crt /etc/apache2/ssl
-
-cp *Name.key /etc/apache2/ssl
-</code></pre><h3 id="启用SSL模块"><a href="#启用SSL模块" class="headerlink" title="启用SSL模块"></a>启用SSL模块</h3><pre><code>sudo a2enmod ssl
-</code></pre><h3 id="修改SSL配置文件default-ssl-conf"><a href="#修改SSL配置文件default-ssl-conf" class="headerlink" title="修改SSL配置文件default-ssl.conf"></a>修改SSL配置文件default-ssl.conf</h3><pre><code>vi /etc/apache2/sites-available/default-ssl.conf
-</code></pre><h4 id="参数修改如下："><a href="#参数修改如下：" class="headerlink" title="参数修改如下："></a><strong>参数修改如下：</strong></h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">IfModules</span> <span class="attr">mod_ssl.c</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">VirtualHost</span> *<span class="attr">:443</span>&gt;</span>  </span><br><span class="line">ServerName   #修改为证书绑定的域名www.YourDomainName.com。</span><br><span class="line">SSLCertificateFile /etc/apache2/ssl/www.YourDomainName_public.crt   #将/etc/apache2/ssl/www.YourDomainName.com_public.crt替换为证书文件路径+证书文件名。</span><br><span class="line">SSLCertificateKeyFile /etc/ssl/apache2/www.YourDomainName.com.key   #将/etc/apache2/ssl/www.YourDomainName.com.key替换为证书密钥文件路径+证书密钥文件名。</span><br><span class="line">SSLCertificateChainFile /etc/apache2/ssl/www.YourDomainName.com_chain.crt  #将/etc/apache2/ssl/www.YourDomainName.com_chain.crt替换为证书链文件路径+证书链文件名。</span><br></pre></td></tr></table></figure>
-<ul>
-<li>sites-available：该目录存放的是可用的虚拟主机；</li>
-<li>sites-enabled：该目录存放的是已经启用的虚拟主机。    </li>
-</ul>
-<h3 id="将default-ssl-conf映射至-etc-apache2-sites-enabled文件夹中建立软链接、实现二者之间的自动关联"><a href="#将default-ssl-conf映射至-etc-apache2-sites-enabled文件夹中建立软链接、实现二者之间的自动关联" class="headerlink" title="将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联"></a>将default-ssl.conf映射至/etc/apache2/sites-enabled文件夹中建立软链接、实现二者之间的自动关联</h3><pre><code>sudo ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/001-ssl.conf
-</code></pre><h3 id="重新加载Apache2配置文件"><a href="#重新加载Apache2配置文件" class="headerlink" title="重新加载Apache2配置文件"></a>重新加载Apache2配置文件</h3><pre><code>sudo /etc/init.d/apache2 force-reload
-</code></pre><h3 id="重新启动Apache2"><a href="#重新启动Apache2" class="headerlink" title="重新启动Apache2"></a>重新启动Apache2</h3><pre><code>sudo /etc/init.d/apache2 restart
-或者 sudo apache2ctl restart
-</code></pre><p>&emsp;&emsp;<strong>服务器安装https安全证书完成！</strong></p>
-]]></content>
-      <categories>
-        <category>博客</category>
-      </categories>
-      <tags>
-        <tag>ssl</tag>
-        <tag>https</tag>
-        <tag>安全证书</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Struts框架</title>
-    <url>/posts/e61e5360.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<h1 id="Struts框架"><a href="#Struts框架" class="headerlink" title="Struts框架"></a>Struts框架</h1><p><strong>为了规范MVC开发而发布的一个框架，类似的还有WebWork，SpringMVC等</strong></p>
-<hr>
-<h1 id="常用的组件有："><a href="#常用的组件有：" class="headerlink" title="常用的组件有："></a>常用的组件有：</h1><ul>
-<li>JSP</li>
-<li>ActionServlet</li>
-<li>ActionForm</li>
-<li>Action</li>
-<li>JavaBean</li>
-<li>配置文件</li>
-</ul>
-<h1 id="Struts工作规则"><a href="#Struts工作规则" class="headerlink" title="Struts工作规则:"></a>Struts工作规则:</h1><pre><code>1.用户输入，JSP表单提交给ActionServlet
-2.ActionServlet将表单封装到ActionForm内，转交给Action
-3.ActionServlet并不直接处理业务逻辑，而是让Action来调用JavaBean（DAO）
-4.Action返回要跳转的JSP页面地址给ActionServlet 
-5.ActionServlet进行跳转，结果在JSP上显示
-</code></pre><h2 id="ActionServlet"><a href="#ActionServlet" class="headerlink" title="ActionServlet"></a>ActionServlet</h2><p>ActionServlet无需自己实现，在web.xml文件内的配置（Myeclipse）中可自动生成<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.apache.struts.action.ActionServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>config<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>/WEB-INF/struts-config.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>debug<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>detail<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>0<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="ActionForm"><a href="#ActionForm" class="headerlink" title="ActionForm"></a>ActionForm</h2><ul>
-<li><strong>ActionForm必须继承org.apache.struts.action.ActionForm</strong></li>
-<li><strong>必须在struts-config.xml中进行注册:</strong><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form-beans</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">form-bean</span> </span></span><br><span class="line"><span class="tag">                <span class="attr">name</span>=<span class="string">"loginForm"</span>  </span></span><br><span class="line"><span class="tag">                <span class="attr">type</span>=<span class="string">"LoginAction.LoginForm"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">form-bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form-beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><ul>
-<li><strong>Action必须继承org.apache.struts.action.Action</strong></li>
-<li><strong>必须重写execute方法，该方法处理业务逻辑，ActionServlet会自动调用该方法，返回要跳转的JSP页面地址。在底层通过反射机制进行</strong></li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ActionForward <span class="title">execute</span><span class="params">(ActionMapping mapping, LoginForm form, HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>必须在struts-config.xml中进行注册:</strong><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">action-mappings</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">path</span>=<span class="string">"/login"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">name</span>=<span class="string">"loginForm"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">"com.yourcompany.struts.action.LoginAction"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">action-mappings</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JavaEE</category>
-      </categories>
-      <tags>
-        <tag>struts</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>蓝桥2013真题C++B组（一）</title>
-    <url>/posts/ba324c08.html</url>
-    <content><![CDATA[<h1 id="高斯日记"><a href="#高斯日记" class="headerlink" title="高斯日记"></a>高斯日记</h1><p>&emsp;&emsp;大数学家高斯有个好习惯：无论如何都要记日记。他的日记有个与众不同的地方，他从不注明年月日，而是用一个整数代替，<br>比如：4210。后来人们知道，那个整数就是日期，它表示那一天是高斯出生后的第几天。<br><br>&emsp;&emsp;这或许也是个好习惯，它时时刻刻提醒着主人：日子又过去一天，还有多少时光可以用于浪费呢？<br><br>&emsp;&emsp;高斯出生于：1777年4月30日。在高斯发现的一个重要定理的日记上标注着：5343，因此可算出那天是：1791年12月15日。<br><br>&emsp;&emsp;高斯获得博士学位的那天日记上标着：8113。请你算出高斯获得博士学位的年月日。<br><br>提交答案的格式是: <strong>yyyy-mm-dd</strong>, 例如: 1980-03-21</p>
-<hr>
-<p>这道题非常简单，由于只提交一个日期，那直接利用程序从出生那天开始跑一遍要求的次数就能够得到答案了。有两点：<br><br><strong>一、需要检查高斯出生的当天算不算是一天，可以拿题目中的例子来测试你的算法（这一步必须检查不然错了冤死了）</strong><br><br><strong>二、由于日期有一些规定，所以需要特别处理：闰年，平年，大月，小月，月末，年末；</strong><br></p>
-<blockquote>
-<p><em>关于闰年，定制闰年规则不是随意设置的。<br>
-</em>首先我们要知道，年的概念，是地球围绕太阳一周的时间（所谓公转周期）称为一年，这个周期是相当稳定的，很长时间也不会变动1秒，但是很遗憾zhidao的是这个周期并不能被一天的时间整除，真正的一年其实是365.2423天（目前）。<em><br>
-</em>所以，如果每年定义为365天的话，1年就会多出0.2423天，4年就会多出0.9692天，非常接近1天，这样闰年就出现了，也就是每4年要有1年设置为366天，来抵消这多出的1天。规则为：<em><br><br>(1)<strong>如果年份能被4整除，则该年计为闰年</strong><br>
-</em>可是，假如不做调整的话，当400年的时候，累计才多出96.92天，闰年的设置却多出来100天，所权以要在400年内，再撤销3个闰年。怎么撤销呢？就有了下面这个规则：<em><br>(2)<strong>如果年份能被100整除，则不计为闰年</strong><br>
-</em>问题又来了，400年里有4个，又少了一个，所以再加一个规则就是：<em><br><br>(3)<strong>如果年份能被400整除，则计为闰年</strong><br>
-</em>这样每400年里设置了97个闰年，误差被调整到400年仅有0.08天，而设置规则也并不是很麻烦，所以一直沿用了下来。*</p>
-</blockquote>
-<p>特别注意本题难点仅在逻辑判断,以下为代码部分：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="comment">/*****************************</span></span><br><span class="line"><span class="comment"> * My Blog: CodeSong.work    *</span></span><br><span class="line"><span class="comment"> *****************************</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isLeapYear</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="comment">//返回是否是闰年的判断</span></span><br><span class="line">    <span class="keyword">return</span> ((n % <span class="number">4</span> == <span class="number">0</span> &amp;&amp; n % <span class="number">100</span> != <span class="number">0</span>) || n % <span class="number">400</span> == <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> year = <span class="number">1777</span>;<span class="comment">//年</span></span><br><span class="line">    <span class="keyword">int</span> month = <span class="number">4</span>;<span class="comment">//月</span></span><br><span class="line">    <span class="keyword">int</span> day = <span class="number">30</span>;<span class="comment">//日</span></span><br><span class="line">    <span class="keyword">int</span> dSum = <span class="number">8113</span>;<span class="comment">//天数</span></span><br><span class="line">    <span class="comment">//月份的逻辑判断为容易出错的地方,还有日期的改变</span></span><br><span class="line">    <span class="keyword">while</span> (--dSum)</span><br><span class="line">    &#123;<span class="comment">//先判断是否为月底</span></span><br><span class="line">        <span class="keyword">if</span> (month == <span class="number">12</span> &amp;&amp; day == <span class="number">31</span>)</span><br><span class="line">        &#123; <span class="comment">//判断是否是一年中最后的一天，year加1，month和day重置为1</span></span><br><span class="line">            year += <span class="number">1</span>;</span><br><span class="line">            month = <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((month == <span class="number">1</span> || month == <span class="number">3</span> || month == <span class="number">5</span> || month == <span class="number">7</span> || month == <span class="number">8</span> || month == <span class="number">10</span>) &amp;&amp; day == <span class="number">31</span>)</span><br><span class="line">        &#123; <span class="comment">//判断是否是大月中的最后一天</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((month == <span class="number">4</span> || month == <span class="number">6</span> || month == <span class="number">9</span> || month == <span class="number">11</span>) &amp;&amp; day == <span class="number">30</span>)</span><br><span class="line">        &#123; <span class="comment">//判断是否是小月中的最后一天</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (month == <span class="number">2</span> &amp;&amp; isLeapYear(year) &amp;&amp; day == <span class="number">29</span>)</span><br><span class="line">        &#123; <span class="comment">//单独处理闰年的月底</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (month == <span class="number">2</span> &amp;&amp; !isLeapYear(year) &amp;&amp; day==<span class="number">28</span>)</span><br><span class="line">        &#123; <span class="comment">//单独处理平年的月底</span></span><br><span class="line">            month += <span class="number">1</span>;</span><br><span class="line">            day = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        day++;<span class="comment">//非月底则day直接增加一</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d-%d-%d\n"</span>, year, month, day);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-]]></content>
-      <categories>
-        <category>蓝桥杯真题</category>
-      </categories>
-      <tags>
-        <tag>蓝桥杯</tag>
-        <tag>算法</tag>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事务是什么？</title>
-    <url>/posts/f8718450.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<p><em>在数据库中,所谓事务是指一组逻辑操作单元,有多个添加，多个修改，多个删除，连接到一起一次执行，要么成功要么失败</em></p>
-<p><em>事务的操作:先定义开始一个事务,然后对数据作修改操作,这时如果提交(COMMIT),这些修改就永久地保存下来,如果回退(ROLLBACK),数据库管理系统将放弃所作的所有修改而回到开始事务时的状态</em></p>
-<h3 id="事务的ACID-acid-属性"><a href="#事务的ACID-acid-属性" class="headerlink" title="事务的ACID(acid)属性"></a>事务的ACID(acid)属性</h3><ol>
-<li><strong>原子性</strong>（Atomicity）原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。 </li>
-<li><strong>一致性</strong>（Consistency）事务必须使数据库从一个一致性状态变换到另外一个一致性状态,主键约束与外键约束。</li>
-<li><strong>隔离性</strong>（Isolation）事务的隔离性是指一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。</li>
-<li><strong>持久性</strong>（Durability）持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来的其他操作和数据库故障不应该对其有任何影响</li>
-</ol>
-<h3 id="JDBC的事务处理"><a href="#JDBC的事务处理" class="headerlink" title="JDBC的事务处理"></a>JDBC的事务处理</h3><p>事务处理：保证所有事务都作为一个工作单元来执行，即使出现了故障，都不能改变这种执行方式。</p>
-<p>当在一个事务中执行多个操作时，</p>
-<p><strong>要么</strong>所有的事务都被提交(commit)</p>
-<p><strong>要么</strong>整个事务回滚(rollback)到最初状态</p>
-<p>当一个连接对象被创建时，默认情况下是自动提交事务：</p>
-<p>每次执行一个 SQL 语句时，如果执行成功，就会向数据库自动提交，而不能回滚</p>
-<p><strong>为了让多个 SQL 语句作为一个事务执行：</strong></p>
-<ol>
-<li><p>调用 Connection 对象的 setAutoCommit(false); 以取消自动提交事务</p>
-</li>
-<li><p>在所有的 SQL 语句都成功执行后，调用 commit(); 方法提交事务</p>
-</li>
-<li><p>在出现异常时，调用 rollback(); 方法回滚事务</p>
-</li>
-<li><p>若此时 Connection 没有被关闭, 则需要恢复其自动提交状态</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>事务</tag>
-        <tag>JDBC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>蓝桥2013真题C++B组（三）</title>
-    <url>/posts/c73a0382.html</url>
-    <content><![CDATA[<h1 id="第39级台阶"><a href="#第39级台阶" class="headerlink" title="第39级台阶"></a>第39级台阶</h1><p>&emsp;&emsp;小明刚刚看完电影《第39级台阶》，离开电影院的时候，他数了数礼堂前的台阶数，恰好是39级!<br><br>    站在台阶前，他突然又想着一个问题：<br><br>&emsp;&emsp;如果我每一步只能迈上1个或2个台阶。先迈左脚，然后左右交替，最后一步是迈右脚，也就是说一共要走偶数步。那么，上完39级台阶，有多少种不同的上法呢？<br></p>
-<p><strong>很明显是类似斐波那契数的东西<code>f(n){return f(n-1)+f(n-2);}</code>，可以用递归来做，模拟迈步子，当把所有台阶都上完时（每一步都可以迈一个台阶或者两个台阶），再判断是否是偶数步数即可，以下为代码部分：</strong><br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="comment">/*****************************</span></span><br><span class="line"><span class="comment"> * My Blog: CodeSong.work    *</span></span><br><span class="line"><span class="comment"> *****************************</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> step)</span></span>&#123;<span class="comment">//n为剩余台阶数，step为已走步数</span></span><br><span class="line">    <span class="keyword">if</span>(n&lt;<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>&amp;&amp;step%<span class="number">2</span>==<span class="number">0</span>)</span><br><span class="line">        ans++;</span><br><span class="line">    f(n<span class="number">-1</span>,step+<span class="number">1</span>);</span><br><span class="line">    f(n<span class="number">-2</span>,step+<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    f(<span class="number">39</span>,<span class="number">0</span>);<span class="comment">//初始总共有39级台阶，已走的步数为零</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-]]></content>
-      <categories>
-        <category>蓝桥杯真题</category>
-      </categories>
-      <tags>
-        <tag>蓝桥杯</tag>
-        <tag>算法</tag>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>蓝桥2013真题C++B组（二）</title>
-    <url>/posts/8a24a0d0.html</url>
-    <content><![CDATA[<h1 id="马虎的算式"><a href="#马虎的算式" class="headerlink" title="马虎的算式"></a>马虎的算式</h1><p>小明是个急性子，上小学的时候经常把老师写在黑板上的题目抄错了。<br>有一次，老师出的题目是：36 x 495 = ?<br>他却给抄成了：396 x 45 = ?<br>但结果却很戏剧性，他的答案竟然是对的！！<br>因为 36 * 495 = 396 * 45 = 17820<br>类似这样的巧合情况可能还有很多，比如：27 * 594 = 297 * 5<br>假设 a b c d e 代表1~9不同的5个数字（注意是各不相同的数字，且不含0）<br>能满足形如： ab * cde = adb * ce 这样的算式一共有多少种呢？<br>请你利用计算机的优势寻找所有的可能，并回答不同算式的种类数。<br>满足乘法交换律的算式计为不同的种类，所以答案肯定是个偶数。<br>答案直接通过浏览器提交。<br>注意：只提交一个表示最终统计种类数的数字，不要提交解答过程或其它多余的内容。<br>能满足形如：ab * cde = adb * ce这样的算式一共有多少种？</p>
-<hr>
-<p>既然左右替换算是一种，直接枚举出所有数的组合，然后判断计算结果是否相等即可，非常简单，以下为代码部分：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="comment">/*****************************</span></span><br><span class="line"><span class="comment"> * My Blog: CodeSong.work    *</span></span><br><span class="line"><span class="comment"> *****************************</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;<span class="comment">//记录答案</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> a=<span class="number">1</span>;a&lt;<span class="number">10</span>;++a)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> b = <span class="number">1</span>; b &lt; <span class="number">10</span>; b++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(b==a)    <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">1</span>; c &lt; <span class="number">10</span>; c++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(c==a||c==b)    <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">1</span>; d &lt; <span class="number">10</span>; d++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span>(d==a||d==b||d==c)    <span class="keyword">continue</span>;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> e = <span class="number">1</span>; e &lt; <span class="number">10</span>; e++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span>(e==a||e==b||e==c||e==d)    <span class="keyword">continue</span>;</span><br><span class="line">                        <span class="comment">//ab * cde = adb * ce </span></span><br><span class="line">                        <span class="keyword">int</span> t1 = (a*<span class="number">10</span> + b)*(c*<span class="number">100</span>+d*<span class="number">10</span>+e);</span><br><span class="line">                        <span class="keyword">int</span> t2 = (a*<span class="number">100</span>+d*<span class="number">10</span>+b)*(c*<span class="number">10</span>+e);</span><br><span class="line">                        <span class="keyword">if</span>(t1==t2)</span><br><span class="line">                            ans++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>蓝桥杯真题</category>
-      </categories>
-      <tags>
-        <tag>蓝桥杯</tag>
-        <tag>算法</tag>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>利用Hibernate进行简单数据库操作</title>
-    <url>/posts/246b5d28.html</url>
-    <content><![CDATA[<!-- title:文章标题
-date:创建时间
-tags:标签 
- - Java
- - 编程
-categories:分类
-copyright:版权
-comments: true    是否可评论 .
-top:false 是否置顶-->
-<!-- # 利用Hibernate进行数据库操作 -->
-<p><strong>Session代表与数据库之间的一次操作，获取Session之后就可以使用Session对数据库进行操作，工作完成后需要关闭：</strong><br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">session.close()</span><br></pre></td></tr></table></figure></p>
-<h1 id="Session获取方式一："><a href="#Session获取方式一：" class="headerlink" title="Session获取方式一："></a>Session获取方式一：</h1><ul>
-<li>读取Hibernate配置文件，使用org.hibernate.cfg.configuration类读取配置文件。 使用方法： <strong>configure()</strong>，读取默认的hibernate.cfg.xml文件</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Configuration conf = <span class="keyword">new</span> Configuration().configure();</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>Hibernate中，数据库操作是用 <strong>org.hibernate.Session</strong> 完成的， <strong>Session</strong> 由 <strong>org.hibernate.SessionFactory</strong> 管理，生成 <strong>SessionFactory</strong> 代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SessionFactory sf = conf.buildSessionFactory();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>利用 <strong>SessionFactory</strong> 打开Session：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session session = sf.openSession();</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="Session获取方式二："><a href="#Session获取方式二：" class="headerlink" title="Session获取方式二："></a>Session获取方式二：</h1><p><strong>在Myeclipse中也提供了一个专门负责进行Session生成的类</strong></p>
-<ul>
-<li><p>创建一个<strong>util</strong>包，包下创建一个文件，右键后选择<strong>Other…</strong> 在弹出的页面选择 <strong>Hibernate</strong>—&gt;<strong>Hibernate Session Factory</strong></p>
-</li>
-<li><p>该类有两个静态方法，<strong>getSession</strong>和<strong>closeSession</strong>，用来生成和关闭<strong>Session</strong>，它用到了很多优化的机制，比较高效。</p>
-</li>
-</ul>
-<p>打开Session：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session session = util.HibernateSessionFactory.getSession();</span><br></pre></td></tr></table></figure></p>
-<p>关闭Session：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">util.HibernateSessionFactory.closeSession();</span><br></pre></td></tr></table></figure></p>
-<h1 id="对数据库增删改查"><a href="#对数据库增删改查" class="headerlink" title="对数据库增删改查"></a>对数据库增删改查</h1><p><strong>注意：</strong> Session的事务不是自动提交的，如果需要对数据库进行增、删、改操作，默认情况下需要开启一个事务（org.hibernate.Transaction），如下：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Transaction tran = session.beginTransaction();</span><br><span class="line">...<span class="comment">//数据库改动</span></span><br><span class="line">tran.commit();</span><br></pre></td></tr></table></figure></p>
-<h2 id="添加操作"><a href="#添加操作" class="headerlink" title="添加操作"></a>添加操作</h2><ul>
-<li><p>利用Session将数据保存到数据库中：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session.save(Object);<span class="comment">//如果存在主键冲突则抛出异常</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>保存或者覆盖：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session.saveOrUpdate(Object);<span class="comment">//如果主键存在则修改记录，否则保存</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="查询操作"><a href="#查询操作" class="headerlink" title="查询操作"></a>查询操作</h2><p><strong>最简单的查询：</strong> 根据主键查询一条记录</p>
-<blockquote>
-<p>Object Session.get(PO对应的类，主键)<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Book book = (Book)session.get(Book.class,<span class="string">"001"</span>);</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>不存在则返回<strong>null</strong></p>
-<h2 id="修改操作"><a href="#修改操作" class="headerlink" title="修改操作"></a>修改操作</h2><p>利用Session将修改后的数据写入数据库：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Sesson.update(Object);</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">Session.saveOrUpdate(Object);</span><br></pre></td></tr></table></figure></p>
-<p>如果主键存在则修改记录，否则保存</p>
-<h2 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h2><p>利用Session删除记录： </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Session.delete(Object);</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>JavaEE</category>
-      </categories>
-      <tags>
-        <tag>Hibernate</tag>
       </tags>
   </entry>
 </search>
