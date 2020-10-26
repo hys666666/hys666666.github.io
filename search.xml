@@ -266,8 +266,8 @@ top:false 是否置顶-->
         <category>JavaEE</category>
       </categories>
       <tags>
-        <tag>Struts</tag>
         <tag>Struts2</tag>
+        <tag>Struts</tag>
       </tags>
   </entry>
   <entry>

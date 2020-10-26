@@ -274,9 +274,9 @@ top:false 是否置顶--&gt;
       <category term="JavaEE" scheme="https://codesong.work/categories/JavaEE/"/>
     
     
-      <category term="Struts" scheme="https://codesong.work/tags/Struts/"/>
-    
       <category term="Struts2" scheme="https://codesong.work/tags/Struts2/"/>
+    
+      <category term="Struts" scheme="https://codesong.work/tags/Struts/"/>
     
   </entry>
   
